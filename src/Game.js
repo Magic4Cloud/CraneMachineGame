@@ -25,6 +25,8 @@ BasicGame.Game = function(game) {
 };
 BasicGame.Game.prototype = {
   dropRate:0.2,
+  hitGiftIndex: null,
+  hitGift: null,
   catchAssist:false,
   claw : null,
   claw_length : 520,
@@ -78,22 +80,30 @@ BasicGame.Game.prototype = {
   spawnDoll: function(x, y, rotateup,back) {
     var index = Math.round(Math.random()+1);
     var gift = this.gifts.create(x - this.dollOffsetX, y - this.dollOffsetY, 'sprites',index + ".png");
+    gift.frameIndex = index;
     gift.rotateup = rotateup;
     if(back){
       gift.sendToBack();
     }
   },
   closeClaw : function(isClose) {
-
+    console.log(isClose)
     if (isClose) {
       this.claw.loadTexture('claw_closed');
-
+      var seed = Math.floor(Math.random()*this.max_doll)
+      var gift = this.gifts.removeChildAt(seed);
+      console.log(gift)
+      this.hitGift = this.game.add.sprite(580 - this.dollOffsetX, 690,
+        'sprites', gift.frameIndex + '.png');
+      this.hitGiftIndex = gift.frameIndex;
+      this.game.world.bringToTop(this.gifts);
+      this.sfx_win.play();
     } else {
       this.claw.loadTexture('claw');
-
     }
 
   },
+
 
   create : function() {
     this.background = this.add.sprite(0, 0, 'preloaderBackground');
@@ -103,11 +113,7 @@ BasicGame.Game.prototype = {
     this.sfx_claw[0] = this.game.add.audio('sfx_claw_0');
     this.sfx_claw[1] = this.game.add.audio('sfx_claw_1');
     this.sfx_claw[2] = this.game.add.audio('sfx_claw_2');
-
-    this.sfx_lose = this.game.add.audio('lose');
     this.sfx_win = this.game.add.audio('win');
-
-
 
     this.gifts = this.game.add.group();
 
@@ -145,6 +151,7 @@ BasicGame.Game.prototype = {
   update : function() {
     for ( var i in this.gifts.children) {
       var gift = this.gifts.children[i];
+
       if(gift.key === 'sprites'){
         if(gift.x >= (600 + this.ovalWidth - this.dollOffsetX)){
           gift.rotateup = true;
@@ -164,8 +171,9 @@ BasicGame.Game.prototype = {
 
     }
     if (this.claw_state == 2) {
+      this.rotate_speed = 10;
       this.claw.y += this.claw_speed;
-            this.claw_rope.height += this.claw_speed;
+      this.claw_rope.height += this.claw_speed;
       if (this.claw.y >= this.claw_length) {
         this.closeClaw(true);
         this.claw_state = 3;
@@ -173,7 +181,8 @@ BasicGame.Game.prototype = {
       }
     } else if (this.claw_state == 3) {
       this.claw.y -= this.claw_speed;
-            this.claw_rope.height -= this.claw_speed;
+      this.claw_rope.height -= this.claw_speed;
+
       if (this.hitGift) {
         this.hitGift.y -= this.claw_speed;
       }
@@ -181,38 +190,17 @@ BasicGame.Game.prototype = {
         this.claw.y = this.zero_point[1];
         this.claw_state = 4;
       }
-    } else if (this.claw_state == 4 || this.claw_state == 5) {
-      this.claw.x -= this.claw_speed;
-      if (this.hitGift) {
-        this.hitGift.x -= this.claw_speed;
-      }
-      if (this.claw.x <= this.zero_point[0]) {
-        if(this.claw_state == 5){
-          this.claw_state = 1;
-        }else{
-                    this.claw.x = this.zero_point[0];
-                    this.claw_state = 0;
-                    this.claw_sfx(-1);
-                    this.closeClaw(false);
-                    if (this.hitGift) {
-                        this.hitGift.static = false;
-                        this.hitGift = null;
-                    }
-        }
-      }
+    } else if (this.claw_state == 4) {
+      this.rotate_speed = 2;
+      this.claw_state = 0;
+      this.claw_sfx(-1);
+      this.closeClaw(false);
+      this.quitGame();
     }
-    if (this.hitGift && this.game.time.now % 30 == 0) {
+    if (this.hitGift) {
       var seed = Math.random();
       // console.log("SEED:" + seed);
-      if (seed <= this.dropRate && seed > 0) {
-        this.hitGift.static = false;
-        this.hitGift.immovable = false;
-        if(this.claw_state == 4){
-          this.hitGift.velocity.x = -this.claw_speed * 20;
-        }
-        this.hitGift = null;
-        this.sfx_lose.play();
-      }
+
     }else if((this.claw_state == 3 || this.claw_state == 4) && this.game.time.now % 30 == 0){
             var seed = Math.random();
             if (seed <= this.dropRate && seed > 0) {
@@ -225,7 +213,7 @@ BasicGame.Game.prototype = {
     // Stop music, delete sprites, purge caches, free resources, all that
     // good stuff.
     // Then let's go back to the main menu.
-    this.state.start('MainMenu');
+    this.state.start('MainMenu', true, false, this.hitGiftIndex);
   }
 };
 

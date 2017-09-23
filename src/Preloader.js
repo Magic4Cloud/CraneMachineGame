@@ -33,25 +33,22 @@ BasicGame.Preloader.prototype = {
     this.load.image('claw', 'assets/sprites/claw_open.png');
     this.load.image('claw_closed', 'assets/sprites/claw_closed.png');
     this.load.image('claw_rope', 'assets/sprites/claw_rope.png');
-    this.load.image('claw_box', 'assets/sprites/claw_box.png');
-    this.load.image('claw_pip', 'assets/sprites/claw_pip.png');
         // for(var i = 1;i < 11;i++){
     //  this.load.image('sprite_' + i,'assets/sprites/' + i + '.png');
          //    this.load.image('sprite_' + i + "1",'assets/sprites/' + i + '1.png');
     // }
-    this.load.physics('physicsData', 'assets/physics/sprites.json');
-    this.load.tilemap('level1','assets/maps/map.json?v=2',null,Phaser.Tilemap.TILED_JSON);
-    this.load.image('world', 'assets/maps/map.png');
 
     //this.load.image('btn_play_up','assets/button/btn_play_up.png');
     this.load.atlasJSONHash('sprites', 'assets/sprites/sprites.png', 'assets/sprites/sprites.json');
-    this.load.physics('spritePhysics', 'assets/sprites/physics.json');
-
 
     this.load.audio('win','assets/audio/win.wav');
     this.load.audio('lose','assets/audio/oops.wav');
     this.load.audio('bgm','assets/audio/7874.wav');
-
+    this.load.image('returnbtn', 'assets/sprites/returnbtn.png');
+    this.load.image('gotchapg', 'assets/sprites/gotchapg.png');
+    this.load.image('success', 'assets/sprites/success.png');
+    this.load.image('text1', 'assets/sprites/text1.png');
+    this.load.image('text2', 'assets/sprites/text2.png');
     this.load.audio('sfx_claw_0','assets/audio/claw_0.m4a');
     this.load.audio('sfx_claw_1','assets/audio/claw_1.m4a');
     this.load.audio('sfx_claw_2','assets/audio/claw_2.m4a');

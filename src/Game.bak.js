@@ -27,7 +27,7 @@ BasicGame.Game.prototype = {
   dropRate:0.2,
   catchAssist:false,
   claw : null,
-  claw_length : 920,
+  claw_length : 720,
   claw_state : 0,
   claw_speed : 5,
   claw_rope:null,

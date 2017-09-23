@@ -7,6 +7,10 @@ BasicGame.MainMenu = function (game) {
 };
 
 BasicGame.MainMenu.prototype = {
+  giftIndex: null,
+  init: function(giftIndex){
+    this.giftIndex = giftIndex;
+  },
 
   create: function () {
 
@@ -16,11 +20,18 @@ BasicGame.MainMenu.prototype = {
 
     this.music = this.add.audio('bgm');
     this.music.play();
+    this.background = this.add.sprite(0, 0, 'preloaderBackground');
 
-    this.add.sprite(0, 0, 'titlepage');
-
-    this.playButton = this.add.button(400, 600, 'playButton', this.startGame, this, 'buttonOver', 'buttonOut', 'buttonOver');
-
+    this.pg = this.add.sprite(0, 0, 'gotchapg');
+    this.title = this.add.sprite(360, 160, 'success');
+    this.game.add.sprite(590 - 75, 330,
+        'sprites', this.giftIndex + '.png');
+    this.game.add.sprite(420, 660,
+        'text1');
+    this.playButton = this.add.button(320, 720, 'returnbtn', this.startGame, this);
+    this.game.add.sprite(460, 950,
+        'text2');
+    console.log(this.hitGift)
   },
 
   update: function () {
