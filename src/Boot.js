@@ -20,9 +20,9 @@ BasicGame.Boot.prototype = {
 
         this.input.maxPointers = 1;
         this.stage.disableVisibilityChange = true;
-        this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+        this.scale.scaleMode = Phaser.ScaleManager.NO_SCALE;
 
-        this.scale.setMinMax(320, 480, 700, 840);
+        this.scale.setMinMax(1080, 990, 1080, 990);
         this.scale.refresh();
         this.scale.pageAlignHorizontally = true;
         this.scale.pageAlignVertically = true;
@@ -42,7 +42,7 @@ BasicGame.Boot.prototype = {
     preload: function () {
 
         //  Here we load the assets required for our preloader (in this case a background and a loading bar)
-        this.load.image('preloaderBackground', 'images/preloader_background.jpg');
+        this.load.image('preloaderBackground', 'images/bg.png');
         this.load.image('preloaderBar', 'images/preloader_bar.png');
 
     },
@@ -54,9 +54,9 @@ BasicGame.Boot.prototype = {
     },
 
     gameResized: function (width, height) {
-        this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+        this.scale.scaleMode = Phaser.ScaleManager.NO_SCALE;
 
-        this.scale.setMinMax(320, 480, 768, 1152);
+        this.scale.setMinMax(1080, 990, 1080, 990);
         this.scale.refresh();
         //  This could be handy if you need to do any extra processing if the game resizes.
         //  A resize could happen if for example swapping orientation on a device or resizing the browser window.
