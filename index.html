@@ -23,7 +23,8 @@
   <div id="game"></div>
 
 <script type="text/javascript">
-
+var gamefunc;
+var startSignal = new Phaser.Signal();
 (function () {
 
   //  Create your Phaser game and inject it into the game div.
@@ -36,13 +37,17 @@
   game.state.add('Boot', BasicGame.Boot);
   game.state.add('Preloader', BasicGame.Preloader);
   game.state.add('MainMenu', BasicGame.MainMenu);
-  game.state.add('Game', BasicGame.Game);
+  gamefunc = game.state.add('Game', BasicGame.Game);
 
   //  Now start the Boot state.
   game.state.start('Boot');
 
 })();
 </script>
-
+<script type="text/javascript">
+  function startGame(userId,faceJson){
+    startSignal.dispatch();
+  }
+</script>
 </body>
 </html>

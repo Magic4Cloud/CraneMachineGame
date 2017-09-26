@@ -11,6 +11,7 @@ BasicGame.Game = function(game) {
   this.math; // lots of useful common math operations
   this.sound; // the sound manager - add a sound, play one, set-up markers,
   // etc
+
   this.stage; // the game stage
   this.time; // the clock
   this.tweens; // the tween manager
@@ -18,6 +19,7 @@ BasicGame.Game = function(game) {
   this.particles; // the particle manager
   this.physics; // the physics manager
   this.rnd; // the repeatable random number generator
+  this.release;
   // You can use any of these from any function within this State.
   // But do consider them as being 'reserved words', i.e. don't create a
   // property for your own game called "world" or you'll over-write the world
@@ -72,10 +74,8 @@ BasicGame.Game.prototype = {
     }
   },
   release : function() {
-    if (this.claw_state === 1) {
       this.claw_state = 2;
       this.claw_sfx(1);
-    }
   },
   spawnDoll: function(x, y, rotateup,back) {
     var index = Math.round(Math.random()+1);
@@ -90,9 +90,11 @@ BasicGame.Game.prototype = {
     console.log(isClose)
     if (isClose) {
       this.claw.loadTexture('claw_closed');
-      var seed = Math.floor(Math.random()*this.max_doll)
+      var total = this.gifts.children.length;
+      var seed = Math.floor(Math.random()*total)
+      console.log(seed);
+      console.log(this.gifts);
       var gift = this.gifts.removeChildAt(seed);
-      console.log(gift)
       this.hitGift = this.game.add.sprite(580 - this.dollOffsetX, 690,
         'sprites', gift.frameIndex + '.png');
       this.hitGiftIndex = gift.frameIndex;
@@ -117,14 +119,20 @@ BasicGame.Game.prototype = {
 
     this.gifts = this.game.add.group();
 
-
+    this.game.add.sprite(460, 950,
+        'text2');
     this.claw = this.gifts.create(this.zero_point[0], this.zero_point[1], 'claw');
 
     this.closeClaw(false);
     this.claw_rope = this.game.add.sprite(this.zero_point[0] + 100, this.zero_point[1], 'claw_rope');
     // attach pointer events
-    this.game.input.onDown.add(this.click, this);
-    this.game.input.onUp.add(this.release, this);
+
+    console.log(startGame)
+    console.log(this.release);
+    startSignal.add(this.release, this);
+
+    //this.game.input.onDown.add(this.click, this);
+    //this.game.input.onUp.add(this.release, this);
     for(var i = 0; i< this.max_doll; i++){
       var x,y,rotateup;
       if(i < this.max_doll/2){
