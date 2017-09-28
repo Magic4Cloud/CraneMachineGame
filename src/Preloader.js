@@ -21,7 +21,8 @@ BasicGame.Preloader.prototype = {
     //  as the files below are loaded in.
     var self=this;
 
-    var userid = this.game.net.getQueryString('userid')
+    var userid = this.game.net.getQueryString('userid');
+    var code = this.game.net.getQueryString('code');
     console.log(userid);
     self.load.setPreloadSprite(self.preloadBar);
 
@@ -33,7 +34,7 @@ BasicGame.Preloader.prototype = {
     //self.load.bitmapFont('caslon', 'fonts/caslon.png', 'fonts/caslon.xml');
     //  + lots of other required assets here
     self.load.crossOrigin = "Anonymous";
-    self.load.json('imglists', 'http://test97.guangguang.net.cn/~yinhd/treasure/index.php/qjxk/gift/getlist?userid=157&code=001');
+    self.load.json('imglists', `http://test97.guangguang.net.cn/~yinhd/treasure/index.php/qjxk/gift/getlist?userid=${userid}&code=${code}`);
 
     self.load.image('claw', 'assets/sprites/claw_open.png');
     self.load.image('claw_closed', 'assets/sprites/claw_closed.png');
