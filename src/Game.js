@@ -78,6 +78,8 @@ BasicGame.Game.prototype = {
     }
   },
   release : function(userId, faceJson, result) {
+
+    this.add.sprite(860, 52, 'topright');
     console.log(result)
     var ret = JSON.parse(result)
     console.log(ret)
@@ -183,7 +185,7 @@ BasicGame.Game.prototype = {
     this.add.sprite(70, 10, 'topframe');
     this.add.sprite(840, 10, 'topframe');
     this.add.sprite(98, 25, 'topleft');
-    this.add.sprite(860, 52, 'topright');
+
     this.add.sprite(303, 10, 'countdown');
     this.time_text = this.game.add.text(540, 60, this.countdown, {
       font: "65px Arial",
