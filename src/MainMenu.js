@@ -25,7 +25,7 @@ BasicGame.MainMenu.prototype = {
     this.pg = this.add.sprite(0, 0, 'gotchapg');
     this.title = this.add.sprite(360, 160, 'success');
     this.game.add.sprite(590 - 75, 330,
-        'sprites', this.giftIndex + '.png');
+        'sprites' + this.giftIndex);
     this.game.add.sprite(420, 660,
         'text1');
     this.playButton = this.add.button(320, 720, 'returnbtn', this.startGame, this);
@@ -46,7 +46,10 @@ BasicGame.MainMenu.prototype = {
     //this.music.stop();
 
     //  And start the actual game
-    this.state.start('Game');
+    if(openFaceDecect){
+      openFaceDecect()
+    }
+
 
   }
 

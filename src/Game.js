@@ -31,8 +31,10 @@ BasicGame.Game.prototype = {
   hitGift: null,
   catchAssist:false,
   claw : null,
+  giftsobject: {},
   claw_length : 520,
   dollOffsetX: 75,
+  winprize: 0,
   dollOffsetY: 75,
   ovalWidth: 320,
   ovalHeight: 40,
@@ -51,8 +53,10 @@ BasicGame.Game.prototype = {
   bgm : null,
   sfx_claw : [],
   score_text:null,
+  time_text: null,
   max_doll:9,
   score:0,
+  countdown: 30,
   coin:0,
   timer:null,
   tileObjects:null,
@@ -73,10 +77,13 @@ BasicGame.Game.prototype = {
       this.claw_sfx(0);
     }
   },
-  release : function() {
-      this.claw_state = 2;
-      this.claw_sfx(1);
+  release : function(userId, faceJson, result) {
+    console.log(result)
+    this.winprize = 0;
+    this.claw_state = 2;
+    this.claw_sfx(1);
   },
+
   spawnDoll: function(i, x, y, rotateup,back) {
     var index = Math.round(Math.random()+1);
     var gift = this.gifts.create(x - this.dollOffsetX, y - this.dollOffsetY, 'sprites' + i);
@@ -86,17 +93,21 @@ BasicGame.Game.prototype = {
     }
   },
   closeClaw : function(isClose) {
-    console.log(isClose)
     if (isClose) {
       this.claw.loadTexture('claw_closed');
       var total = this.gifts.children.length;
-      var seed = Math.floor(Math.random()*total)
-      console.log(seed);
-      console.log(this.gifts);
-      var gift = this.gifts.removeChildAt(seed);
+      var seed = this.winprize
+
+      for ( var i in this.gifts.children) {
+        var gift = this.gifts.children[i];
+        if(gift.key == ("sprites" + seed)){
+          gift.destroy();
+        }
+      }
+
+
       this.hitGift = this.game.add.sprite(580 - this.dollOffsetX, 690,
-        'sprites', gift.frameIndex + '.png');
-      this.hitGiftIndex = gift.frameIndex;
+        'sprites' + seed);
       this.game.world.bringToTop(this.gifts);
       this.sfx_win.play();
     } else {
@@ -115,11 +126,17 @@ BasicGame.Game.prototype = {
             console.log(phaserJSON.retinfo[i].giftimg);
             console.log(i);
             this.load.image('sprites' + i, phaserJSON.retinfo[i].giftimg);
+            this.giftsobject[phaserJSON.retinfo[i].giftid] = i;
         }
     }
     this.max_doll = phaserJSON.retinfo.length
   },
-
+  checkTime(){
+    if(this.countdown > 0){
+      this.countdown-=1;
+      this.time_text.setText(this.countdown);
+    }
+  },
   create : function() {
     this.background = this.add.sprite(0, 0, 'preloaderBackground');
 
@@ -159,15 +176,27 @@ BasicGame.Game.prototype = {
         y = 700 + Math.sqrt((this.ovalWidth*this.ovalWidth*this.ovalHeight*this.ovalHeight - this.ovalHeight*this.ovalHeight*(x -600)*(x -600))/(this.ovalWidth*this.ovalWidth));
         this.spawnDoll(i, x, y, rotateup, true);
       }
-      console.log(x, y);
-
-
     }
-    console.log(this.gifts.children[0])
-    this.coin = 50;
-    console.log("starting play state");
+    this.add.sprite(4, 0, 'topmask');
+    this.add.sprite(70, 10, 'topframe');
+    this.add.sprite(840, 10, 'topframe');
+    this.add.sprite(98, 25, 'topleft');
+    this.add.sprite(860, 52, 'topright');
+    this.add.sprite(303, 10, 'countdown');
+    this.time_text = this.game.add.text(540, 60, this.countdown, {
+      font: "65px Arial",
+      fill: "#ffffff",
+      align: "center"
+    });
+    this.time_text.anchor.setTo(0.5, 0.5);
+    this.timer = this.game.time.create(false);
+    this.timer.loop(1000, this.checkTime, this);
+    this.timer.start();
   },
   update : function() {
+    if(this.countdown <=0){
+      openFaceDecect()
+    }
     for ( var i in this.gifts.children) {
       var gift = this.gifts.children[i];
 
@@ -219,11 +248,10 @@ BasicGame.Game.prototype = {
     if (this.hitGift) {
       var seed = Math.random();
       // console.log("SEED:" + seed);
-
     }else if((this.claw_state == 3 || this.claw_state == 4) && this.game.time.now % 30 == 0){
-            var seed = Math.random();
-            if (seed <= this.dropRate && seed > 0) {
-            }
+      var seed = Math.random();
+      if (seed <= this.dropRate && seed > 0) {
+      }
     }
 
   },
@@ -233,7 +261,7 @@ BasicGame.Game.prototype = {
     // Stop music, delete sprites, purge caches, free resources, all that
     // good stuff.
     // Then let's go back to the main menu.
-    this.state.start('MainMenu', true, false, this.hitGiftIndex);
+    this.state.start('MainMenu', true, false, this.winprize);
   }
 };
 

@@ -45,8 +45,8 @@ var startSignal = new Phaser.Signal();
 })();
 </script>
 <script type="text/javascript">
-  function startGame(userId,faceJson){
-    startSignal.dispatch();
+  function startGame(userId, faceJson, result){
+    startSignal.dispatch(userId, faceJson, result);
   }
 </script>
 </body>

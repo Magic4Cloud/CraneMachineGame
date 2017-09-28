@@ -46,6 +46,12 @@ BasicGame.Preloader.prototype = {
     //self.load.image('btn_play_up','assets/button/btn_play_up.png');
     self.load.atlasJSONHash('sprites', 'assets/sprites/sprites.png', 'assets/sprites/sprites.json');
     //self.load.image('sprites1', 'http://seopic.699pic.com/photo/50001/1802.jpg_wh1200.jpg');
+    self.load.image('countdown', 'images/count-down.png');
+    self.load.image('topframe', 'images/top-frame.png');
+    self.load.image('topmask', 'images/top-mask.png');
+    self.load.image('topleft', 'images/topleft.png');
+    self.load.image('topright', 'images/topright.png');
+
     self.load.audio('win','assets/audio/win.wav');
     self.load.audio('lose','assets/audio/oops.wav');
     self.load.audio('bgm','assets/audio/7874.wav');
@@ -58,14 +64,12 @@ BasicGame.Preloader.prototype = {
     self.load.audio('sfx_claw_1','assets/audio/claw_1.m4a');
     self.load.audio('sfx_claw_2','assets/audio/claw_2.m4a');
 
-
     //game.load.json('imglists', 'http://run.plnkr.co/plunks/v8xyYN64V4nqCshgjKms/data-1.json');
 
 
   },
 
   create: function () {
-
     //  Once the load has finished we disable the crop because we're going to sit in the update loop for a short while as the music decodes
     this.preloadBar.cropEnabled = false;
   },
