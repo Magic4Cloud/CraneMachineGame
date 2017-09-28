@@ -77,10 +77,9 @@ BasicGame.Game.prototype = {
       this.claw_state = 2;
       this.claw_sfx(1);
   },
-  spawnDoll: function(x, y, rotateup,back) {
+  spawnDoll: function(i, x, y, rotateup,back) {
     var index = Math.round(Math.random()+1);
-    var gift = this.gifts.create(x - this.dollOffsetX, y - this.dollOffsetY, 'sprites',index + ".png");
-    gift.frameIndex = index;
+    var gift = this.gifts.create(x - this.dollOffsetX, y - this.dollOffsetY, 'sprites' + i);
     gift.rotateup = rotateup;
     if(back){
       gift.sendToBack();
@@ -105,7 +104,21 @@ BasicGame.Game.prototype = {
     }
 
   },
-
+  preload: function() {
+    this.background = this.add.sprite(0, 0, 'preloaderBackground');
+    this.preloadBar = this.add.sprite(340, 345, 'preloaderBar');
+    this.load.setPreloadSprite(this.preloadBar);
+    var phaserJSON = this.game.cache.getJSON('imglists');
+    console.log(phaserJSON)
+    if(phaserJSON.retval === 'ok'){
+        for(var i=0; i < phaserJSON.retinfo.length; i++){
+            console.log(phaserJSON.retinfo[i].giftimg);
+            console.log(i);
+            this.load.image('sprites' + i, phaserJSON.retinfo[i].giftimg);
+        }
+    }
+    this.max_doll = phaserJSON.retinfo.length
+  },
 
   create : function() {
     this.background = this.add.sprite(0, 0, 'preloaderBackground');
@@ -127,8 +140,6 @@ BasicGame.Game.prototype = {
     this.claw_rope = this.game.add.sprite(this.zero_point[0] + 100, this.zero_point[1], 'claw_rope');
     // attach pointer events
 
-    console.log(startGame)
-    console.log(this.release);
     startSignal.add(this.release, this);
 
     //this.game.input.onDown.add(this.click, this);
@@ -141,12 +152,12 @@ BasicGame.Game.prototype = {
 
         x = 600 - this.ovalWidth + (this.ovalWidth*2/Math.floor(this.max_doll/2))*i;
         y = 700 - Math.sqrt((this.ovalWidth*this.ovalWidth*this.ovalHeight*this.ovalHeight - this.ovalHeight*this.ovalHeight*(x -600)*(x -600))/(this.ovalWidth*this.ovalWidth));
-        this.spawnDoll(x, y, rotateup, false);
+        this.spawnDoll(i, x, y, rotateup, false);
       }else{
         rotateup = true;
         x = 600 + this.ovalWidth - (this.ovalWidth*2/Math.floor(this.max_doll/2 + 1)) * (i - Math.floor(this.max_doll/2))
         y = 700 + Math.sqrt((this.ovalWidth*this.ovalWidth*this.ovalHeight*this.ovalHeight - this.ovalHeight*this.ovalHeight*(x -600)*(x -600))/(this.ovalWidth*this.ovalWidth));
-        this.spawnDoll(x, y, rotateup, true);
+        this.spawnDoll(i, x, y, rotateup, true);
       }
       console.log(x, y);
 
@@ -160,7 +171,7 @@ BasicGame.Game.prototype = {
     for ( var i in this.gifts.children) {
       var gift = this.gifts.children[i];
 
-      if(gift.key === 'sprites'){
+      if(gift.key.match(/sprites/)){
         if(gift.x >= (600 + this.ovalWidth - this.dollOffsetX)){
           gift.rotateup = true;
           gift.sendToBack();
@@ -217,6 +228,7 @@ BasicGame.Game.prototype = {
 
   },
   quitGame : function(pointer) {
+
     // Here you should destroy anything you no longer need.
     // Stop music, delete sprites, purge caches, free resources, all that
     // good stuff.

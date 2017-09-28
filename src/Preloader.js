@@ -9,7 +9,6 @@ BasicGame.Preloader = function (game) {
 };
 
 BasicGame.Preloader.prototype = {
-
   preload: function () {
 
     //  These are the assets we loaded in Boot.js
@@ -20,45 +19,55 @@ BasicGame.Preloader.prototype = {
     //  This sets the preloadBar sprite as a loader sprite.
     //  What that does is automatically crop the sprite from 0 to full-width
     //  as the files below are loaded in.
-    this.load.setPreloadSprite(this.preloadBar);
+    var self=this;
+
+    var userid = this.game.net.getQueryString('userid')
+    console.log(userid);
+    self.load.setPreloadSprite(self.preloadBar);
 
     //  Here we load the rest of the assets our game needs.
     //  As this is just a Project Template I've not provided these assets, the lines below won't work as the files themselves will 404, they are just an example of use.
-    //  this.load.image('titlepage', 'images/title.png');
-    //this.load.atlas('playButton', 'images/play_button.png', 'images/play_button.json');
-    //this.load.audio('titleMusic', ['audio/main_menu.mp3']);
-    //this.load.bitmapFont('caslon', 'fonts/caslon.png', 'fonts/caslon.xml');
+    //  self.load.image('titlepage', 'images/title.png');
+    //self.load.atlas('playButton', 'images/play_button.png', 'images/play_button.json');
+    //self.load.audio('titleMusic', ['audio/main_menu.mp3']);
+    //self.load.bitmapFont('caslon', 'fonts/caslon.png', 'fonts/caslon.xml');
     //  + lots of other required assets here
+    self.load.crossOrigin = "Anonymous";
+    self.load.json('imglists', 'http://test97.guangguang.net.cn/~yinhd/treasure/index.php/qjxk/gift/getlist?userid=157&code=001');
 
-    this.load.image('claw', 'assets/sprites/claw_open.png');
-    this.load.image('claw_closed', 'assets/sprites/claw_closed.png');
-    this.load.image('claw_rope', 'assets/sprites/claw_rope.png');
+    self.load.image('claw', 'assets/sprites/claw_open.png');
+    self.load.image('claw_closed', 'assets/sprites/claw_closed.png');
+    self.load.image('claw_rope', 'assets/sprites/claw_rope.png');
         // for(var i = 1;i < 11;i++){
-    //  this.load.image('sprite_' + i,'assets/sprites/' + i + '.png');
-         //    this.load.image('sprite_' + i + "1",'assets/sprites/' + i + '1.png');
+    //  self.load.image('sprite_' + i,'assets/sprites/' + i + '.png');
+         //    self.load.image('sprite_' + i + "1",'assets/sprites/' + i + '1.png');
     // }
 
-    //this.load.image('btn_play_up','assets/button/btn_play_up.png');
-    this.load.atlasJSONHash('sprites', 'assets/sprites/sprites.png', 'assets/sprites/sprites.json');
+    //self.load.image('btn_play_up','assets/button/btn_play_up.png');
+    self.load.atlasJSONHash('sprites', 'assets/sprites/sprites.png', 'assets/sprites/sprites.json');
+    //self.load.image('sprites1', 'http://seopic.699pic.com/photo/50001/1802.jpg_wh1200.jpg');
+    self.load.audio('win','assets/audio/win.wav');
+    self.load.audio('lose','assets/audio/oops.wav');
+    self.load.audio('bgm','assets/audio/7874.wav');
+    self.load.image('returnbtn', 'assets/sprites/returnbtn.png');
+    self.load.image('gotchapg', 'assets/sprites/gotchapg.png');
+    self.load.image('success', 'assets/sprites/success.png');
+    self.load.image('text1', 'assets/sprites/text1.png');
+    self.load.image('text2', 'assets/sprites/text2.png');
+    self.load.audio('sfx_claw_0','assets/audio/claw_0.m4a');
+    self.load.audio('sfx_claw_1','assets/audio/claw_1.m4a');
+    self.load.audio('sfx_claw_2','assets/audio/claw_2.m4a');
 
-    this.load.audio('win','assets/audio/win.wav');
-    this.load.audio('lose','assets/audio/oops.wav');
-    this.load.audio('bgm','assets/audio/7874.wav');
-    this.load.image('returnbtn', 'assets/sprites/returnbtn.png');
-    this.load.image('gotchapg', 'assets/sprites/gotchapg.png');
-    this.load.image('success', 'assets/sprites/success.png');
-    this.load.image('text1', 'assets/sprites/text1.png');
-    this.load.image('text2', 'assets/sprites/text2.png');
-    this.load.audio('sfx_claw_0','assets/audio/claw_0.m4a');
-    this.load.audio('sfx_claw_1','assets/audio/claw_1.m4a');
-    this.load.audio('sfx_claw_2','assets/audio/claw_2.m4a');
+
+    //game.load.json('imglists', 'http://run.plnkr.co/plunks/v8xyYN64V4nqCshgjKms/data-1.json');
+
+
   },
 
   create: function () {
 
     //  Once the load has finished we disable the crop because we're going to sit in the update loop for a short while as the music decodes
     this.preloadBar.cropEnabled = false;
-
   },
 
   update: function () {
