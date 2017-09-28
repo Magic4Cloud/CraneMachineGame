@@ -79,8 +79,9 @@ BasicGame.Game.prototype = {
   },
   release : function(userId, faceJson, result) {
     console.log(result)
-    console.log(result.retval)
-    this.winprize = result.retretinfo.giftid || 0;
+    var ret = JSON.parse(result)
+    console.log(ret)
+    this.winprize = this.giftsobject[ret.retinfo.giftid];
     this.claw_state = 2;
     this.claw_sfx(1);
   },
@@ -262,7 +263,12 @@ BasicGame.Game.prototype = {
     // Stop music, delete sprites, purge caches, free resources, all that
     // good stuff.
     // Then let's go back to the main menu.
-    this.state.start('MainMenu', true, false, this.winprize);
+    if(this.winprize){
+      this.state.start('MainMenu', true, false, this.winprize);
+    }else{
+      this.state.start('FailMenu', true, false);
+    }
+
   }
 };
 

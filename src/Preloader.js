@@ -52,6 +52,9 @@ BasicGame.Preloader.prototype = {
     self.load.image('topmask', 'images/top-mask.png');
     self.load.image('topleft', 'images/topleft.png');
     self.load.image('topright', 'images/topright.png');
+    self.load.image('mask', 'images/mask.png');
+    self.load.image('fail', 'images/fail.png');
+    self.load.image('regret', 'images/regret.png');
 
     self.load.audio('win','assets/audio/win.wav');
     self.load.audio('lose','assets/audio/oops.wav');

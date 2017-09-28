@@ -18,7 +18,13 @@
   <script src="src/Preloader.js"></script>
 
   <script src="src/MainMenu.js"></script>
+  <script src="src/FailMenu.js"></script>
   <script src="src/Game.js?v=3"></script>
+  <script type="text/javascript">
+     function openFaceDecect(){
+       window.OpenAndroidInterface.onGameFinish("娃娃id是3");
+     }
+  </script>
 </head>
 <body>
   <!--<div class="title">夹了个娃娃</div>-->
@@ -39,6 +45,7 @@ var startSignal = new Phaser.Signal();
   game.state.add('Boot', BasicGame.Boot);
   game.state.add('Preloader', BasicGame.Preloader);
   game.state.add('MainMenu', BasicGame.MainMenu);
+  game.state.add('FailMenu', BasicGame.FailMenu);
   gamefunc = game.state.add('Game', BasicGame.Game);
 
   //  Now start the Boot state.
