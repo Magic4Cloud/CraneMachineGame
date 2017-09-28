@@ -79,6 +79,7 @@ BasicGame.Game.prototype = {
   },
   release : function(userId, faceJson, result) {
     console.log(result)
+    console.log(result.retval)
     this.winprize = 0;
     this.claw_state = 2;
     this.claw_sfx(1);
