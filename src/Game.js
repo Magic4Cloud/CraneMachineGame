@@ -135,7 +135,7 @@ BasicGame.Game.prototype = {
     }
     this.max_doll = phaserJSON.retinfo.length
   },
-  checkTime(){
+  checkTime: function(){
     if(this.countdown > 0){
       this.countdown-=1;
       this.time_text.setText(this.countdown);
