@@ -180,7 +180,7 @@ BasicGame.Game.prototype = {
   },
   update : function() {
     if(this.countdown <=0){
-      openFaceDecect()
+      this.state.start('FailMenu', true, false);
     }
     for ( var i in this.gifts.children) {
       var gift = this.gifts.children[i];
