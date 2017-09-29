@@ -14,59 +14,9 @@ module.exports = function (grunt) {
     concat: {
       mutile: {
         files: {
-          'app/assets/js/core.js': ['app/assets/js/jquery-3.2.1.min.js',
-            'app/assets/js/bootstrap.js']
+          'build/core.js': ['src/Boot.js',
+            'src/FailMenu.js', 'src/Game.js', 'src/MainMenu.js', 'src/Preloader.js']
         }
-      }
-    },
-    sass: {                              // Task
-      dist: {                            // Target
-        options: {                       // Target options
-          style: 'expanded'
-        },
-        files: {                         // Dictionary of files
-          'app/assets/css/header.css': 'app/assets/css/header.scss'
-        }
-      }
-    },
-    cssmin: {
-      target: {
-        files: [{
-          expand: true,
-          cwd: 'public/assets/css/',
-          src: ['*.css', '!*.min.css'],
-          dest: 'public/assets/css/',
-          ext: '.css'
-        }]
-      }
-    },
-    uncss: {
-      dist: {
-        files: [{
-          nonull: true,
-          src: ['http://www.hiotk.com/'],
-          dest: 'app/assets/css/app.css'
-        }]
-      }
-    },
-    copy: {
-      moveCss: {
-        expand: true,
-        cwd: 'app/assets/css/',
-        src: ['**/*.css'],
-        dest: 'public/assets/css/'
-      },
-      moveFonts: {
-        expand: true,
-        cwd: 'app/assets/fonts/',
-        src: ['*'],
-        dest: 'public/assets/fonts/'
-      },
-      moveImg: {
-        expand: true,
-        cwd: 'app/assets/images/',
-        src: ['**/*'],
-        dest: 'public/assets/images/'
       }
     },
     uglify: {
@@ -76,27 +26,10 @@ module.exports = function (grunt) {
       other: {
         files: [{
           expand: true,
-          cwd: 'app/assets/js/',
+          cwd: 'build/',
           src: ['**/*.js'],
-          dest: 'public/assets/js/'
+          dest: 'build/'
         }]
-      }
-    },
-    cachebuster: {
-      build: {
-        options: {
-          format: 'json',
-          basedir: './',
-          length: 16,
-          formatter: function (hashes) {
-            return JSON.stringify(hashes).replace(/\\\\/ig, "/");
-          }
-        },
-        src: [
-          'public/assets/js/*.js',
-          'public/assets/css/*.css'
-        ],
-        dest: 'cachebusters.json'
       }
     }
   });
@@ -113,5 +46,5 @@ module.exports = function (grunt) {
   //grunt.registerTask('build', ['cachebuster:build', 'refreshcach']);
   //grunt.registerTask('uncss', ['uncss']);
 
-  grunt.registerTask('build', ['sass', 'copy',  'concat', 'cssmin', 'uglify', 'cachebuster:build']);
+  grunt.registerTask('build', ['concat', 'uglify']);
 };
