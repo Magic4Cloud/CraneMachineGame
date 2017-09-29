@@ -66,7 +66,7 @@ BasicGame.Game.prototype = {
     }
   },
   release : function(userId, faceJson, result) {
-
+    this.timer.stop();
     this.add.sprite(860, 52, 'topright');
     console.log(result)
     var ret = JSON.parse(result)
