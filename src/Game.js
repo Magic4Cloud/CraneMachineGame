@@ -50,7 +50,6 @@ BasicGame.Game.prototype = {
   layer : null,
   sfx_win : null,
   sfx_lose : null,
-  bgm : null,
   sfx_claw : [],
   score_text:null,
   time_text: null,
@@ -60,21 +59,10 @@ BasicGame.Game.prototype = {
   coin:0,
   timer:null,
   tileObjects:null,
-  claw_sfx : function(index) {
-    for ( var i in this.sfx_claw) {
-      var sfx = this.sfx_claw[i];
-      if (i == index) {
-        sfx.loopFull();
-      } else {
-        sfx.stop();
-      }
-    }
-  },
   click : function() {
     if (this.claw_state === 0) {
 
       this.claw_state = 1;
-      this.claw_sfx(0);
     }
   },
   release : function(userId, faceJson, result) {
@@ -85,7 +73,6 @@ BasicGame.Game.prototype = {
     console.log(ret)
     this.winprize = this.giftsobject[ret.retinfo.giftid];
     this.claw_state = 2;
-    this.claw_sfx(1);
   },
 
   spawnDoll: function(i, x, y, rotateup,back) {
@@ -113,7 +100,6 @@ BasicGame.Game.prototype = {
       this.hitGift = this.game.add.sprite(580 - this.dollOffsetX, 690,
         'sprites' + seed);
       this.game.world.bringToTop(this.gifts);
-      this.sfx_win.play();
     } else {
       this.claw.loadTexture('claw');
     }
@@ -144,12 +130,7 @@ BasicGame.Game.prototype = {
   create : function() {
     this.background = this.add.sprite(0, 0, 'preloaderBackground');
 
-    this.bgm = this.game.add.audio('bgm');
-    this.bgm.loopFull();
-    this.sfx_claw[0] = this.game.add.audio('sfx_claw_0');
-    this.sfx_claw[1] = this.game.add.audio('sfx_claw_1');
-    this.sfx_claw[2] = this.game.add.audio('sfx_claw_2');
-    this.sfx_win = this.game.add.audio('win');
+
 
     this.gifts = this.game.add.group();
 
@@ -229,7 +210,6 @@ BasicGame.Game.prototype = {
       if (this.claw.y >= this.claw_length) {
         this.closeClaw(true);
         this.claw_state = 3;
-        this.claw_sfx(2);
       }
     } else if (this.claw_state == 3) {
       this.claw.y -= this.claw_speed;
@@ -245,7 +225,6 @@ BasicGame.Game.prototype = {
     } else if (this.claw_state == 4) {
       this.rotate_speed = 2;
       this.claw_state = 0;
-      this.claw_sfx(-1);
       this.closeClaw(false);
       this.quitGame();
     }

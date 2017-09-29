@@ -43,7 +43,6 @@ BasicGame.Preloader.prototype = {
     // }
 
     //this.load.image('btn_play_up','assets/button/btn_play_up.png');
-    this.load.atlasJSONHash('sprites', 'assets/sprites/sprites.png', 'assets/sprites/sprites.json');
     //this.load.image('sprites1', 'http://seopic.699pic.com/photo/50001/1802.jpg_wh1200.jpg');
     this.load.image('countdown', 'images/count-down.png');
     this.load.image('topframe', 'images/top-frame.png');
@@ -54,17 +53,13 @@ BasicGame.Preloader.prototype = {
     this.load.image('fail', 'images/fail.png');
     this.load.image('regret', 'images/regret.png');
 
-    this.load.audio('win','assets/audio/win.wav');
-    this.load.audio('lose','assets/audio/oops.wav');
-    this.load.audio('bgm','assets/audio/7874.wav');
+
     this.load.image('returnbtn', 'assets/sprites/returnbtn.png');
     this.load.image('gotchapg', 'assets/sprites/gotchapg.png');
     this.load.image('success', 'assets/sprites/success.png');
     this.load.image('text1', 'assets/sprites/text1.png');
     this.load.image('text2', 'assets/sprites/text2.png');
-    this.load.audio('sfx_claw_0','assets/audio/claw_0.m4a');
-    this.load.audio('sfx_claw_1','assets/audio/claw_1.m4a');
-    this.load.audio('sfx_claw_2','assets/audio/claw_2.m4a');
+
 
     //game.load.json('imglists', 'http://run.plnkr.co/plunks/v8xyYN64V4nqCshgjKms/data-1.json');
 
@@ -87,7 +82,7 @@ BasicGame.Preloader.prototype = {
     //  If you don't have any music in your game then put the game.state.start line into the create function and delete
     //  the update function completely.
 
-    if (this.cache.isSoundDecoded('bgm') && this.ready == false)
+    if (this.ready == false)
     {
       this.ready = true;
       this.state.start('Game');
