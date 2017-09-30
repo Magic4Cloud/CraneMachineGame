@@ -81,7 +81,9 @@ BasicGame.Game.prototype = {
     console.log(this.winprize)
     this.claw_state = 2;
   },
-
+  stopcountdown: function(){
+    this.timer.stop();
+  },
   spawnDoll: function(i, x, y, rotateup,back) {
     var index = Math.round(Math.random()+1);
     var gift = this.gifts.create(x - this.dollOffsetX, y - this.dollOffsetY, 'sprites' + i);
@@ -102,7 +104,6 @@ BasicGame.Game.prototype = {
           gift.destroy();
         }
       }
-
 
       this.hitGift = this.game.add.sprite(545 - this.dollOffsetX, 700,
         'sprites' + seed);
@@ -149,6 +150,7 @@ BasicGame.Game.prototype = {
     // attach pointer events
 
     startSignal.add(this.release, this);
+    countdownSignal.add(this.stopcountdown, this);
 
     //this.game.input.onDown.add(this.click, this);
     //this.game.input.onUp.add(this.release, this);
