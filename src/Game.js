@@ -117,7 +117,6 @@ BasicGame.Game.prototype = {
     this.preloadBar = this.add.sprite(340, 345, 'preloaderBar');
     this.load.setPreloadSprite(this.preloadBar);
     var phaserJSON = this.game.cache.getJSON('imglists');
-    console.log(phaserJSON)
     if(phaserJSON.retval === 'ok'){
         for(var i=0; i < phaserJSON.retinfo.length; i++){
             console.log(phaserJSON.retinfo[i].giftimg);
@@ -139,8 +138,6 @@ BasicGame.Game.prototype = {
   create : function() {
     this.background = this.add.sprite(0, 0, 'preloaderBackground');
 
-
-
     this.gifts = this.game.add.group();
 
     this.game.add.sprite(460, 950,
@@ -158,9 +155,7 @@ BasicGame.Game.prototype = {
     for(var i = 0; i< this.max_doll; i++){
       var x,y,rotateup;
       if(i < this.max_doll/2){
-
         rotateup = false;
-
         x = 600 - this.ovalWidth + (this.ovalWidth*2/Math.floor(this.max_doll/2))*i;
         y = 700 - Math.sqrt((this.ovalWidth*this.ovalWidth*this.ovalHeight*this.ovalHeight - this.ovalHeight*this.ovalHeight*(x -600)*(x -600))/(this.ovalWidth*this.ovalWidth));
         this.spawnDoll(i, x, y, rotateup, false);
@@ -175,7 +170,6 @@ BasicGame.Game.prototype = {
     this.add.sprite(70, 10, 'topframe');
     this.add.sprite(840, 10, 'topframe');
     this.add.sprite(98, 25, 'topleft');
-
     this.add.sprite(303, 10, 'countdown');
     this.time_text = this.game.add.text(540, 60, this.countdown, {
       font: "65px Arial",
@@ -193,7 +187,6 @@ BasicGame.Game.prototype = {
     }
     for ( var i in this.gifts.children) {
       var gift = this.gifts.children[i];
-
       if(gift.key.match(/sprites/)){
         if(gift.x >= (600 + this.ovalWidth - this.dollOffsetX)){
           gift.rotateup = true;

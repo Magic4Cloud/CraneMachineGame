@@ -30,26 +30,23 @@ BasicGame.FailMenu.prototype = {
     this.add.sprite(404, 200, 'regret')
     this.playButton = this.add.button(320, 720, 'returnbtn', this.startGame, this);
     this.game.add.sprite(460, 950, 'text2');
-
+    if(openError){
+      openError();
+    }
   },
-
   update: function () {
 
     //  Do some nice funky main menu effect here
 
   },
-
   startGame: function (pointer) {
 
     //  Ok, the Play Button has been clicked or touched, so let's stop the music (otherwise it'll carry on playing)
     //this.music.stop();
 
     //  And start the actual game
-    if(openError){
-      openError();
+    if(openFaceDecect){
+      openFaceDecect()
     }
-
-
   }
-
 };

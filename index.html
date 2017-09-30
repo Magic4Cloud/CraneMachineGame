@@ -28,7 +28,7 @@
   <div id="game"></div>
 
 <script type="text/javascript">
-var gamefunc;
+
 var startSignal = new Phaser.Signal();
 (function () {
 
@@ -43,7 +43,7 @@ var startSignal = new Phaser.Signal();
   game.state.add('Preloader', BasicGame.Preloader);
   game.state.add('MainMenu', BasicGame.MainMenu);
   game.state.add('FailMenu', BasicGame.FailMenu);
-  gamefunc = game.state.add('Game', BasicGame.Game);
+  game.state.add('Game', BasicGame.Game);
 
   //  Now start the Boot state.
   game.state.start('Boot');
