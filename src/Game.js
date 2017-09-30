@@ -68,7 +68,6 @@ BasicGame.Game.prototype = {
   release : function(userId, faceJson, result) {
     this.timer.stop();
     this.add.sprite(860, 52, 'topright');
-    console.log(result)
     var ret;
     try{
       ret = JSON.parse(result)
@@ -105,8 +104,7 @@ BasicGame.Game.prototype = {
         }
       }
 
-      this.hitGift = this.game.add.sprite(545 - this.dollOffsetX, 700,
-        'sprites' + seed);
+      this.hitGift = this.game.add.sprite(545 - this.dollOffsetX, 700, 'sprites' + seed);
       this.game.world.bringToTop(this.gifts);
     } else {
       this.claw.loadTexture('claw');
@@ -120,8 +118,6 @@ BasicGame.Game.prototype = {
     var phaserJSON = this.game.cache.getJSON('imglists');
     if(phaserJSON.retval === 'ok'){
         for(var i=0; i < phaserJSON.retinfo.length; i++){
-            console.log(phaserJSON.retinfo[i].giftimg);
-            console.log(i);
             this.load.image('sprites' + i, phaserJSON.retinfo[i].giftimg);
             this.giftsobject[phaserJSON.retinfo[i].giftid] = i;
         }
@@ -141,8 +137,7 @@ BasicGame.Game.prototype = {
 
     this.gifts = this.game.add.group();
 
-    this.game.add.sprite(460, 950,
-        'text2');
+    this.game.add.sprite(460, 950, 'text2');
     this.claw = this.gifts.create(this.zero_point[0], this.zero_point[1], 'claw');
 
     this.closeClaw(false);
@@ -236,14 +231,6 @@ BasicGame.Game.prototype = {
       this.claw_state = 0;
       this.closeClaw(false);
       this.quitGame();
-    }
-    if (this.hitGift) {
-      var seed = Math.random();
-      // console.log("SEED:" + seed);
-    }else if((this.claw_state == 3 || this.claw_state == 4) && this.game.time.now % 30 == 0){
-      var seed = Math.random();
-      if (seed <= this.dropRate && seed > 0) {
-      }
     }
 
   },
