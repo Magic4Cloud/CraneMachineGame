@@ -182,6 +182,11 @@ BasicGame.Game.prototype = {
     this.timer = this.game.time.create(false);
     this.timer.loop(1000, this.checkTime, this);
     this.timer.start();
+    try{
+      onReady();
+    }catch(e){
+
+    }
   },
   update : function() {
     if(this.countdown <=0){
