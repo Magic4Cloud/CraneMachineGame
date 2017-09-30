@@ -123,6 +123,8 @@ BasicGame.Game.prototype = {
             this.load.image('sprites' + i, phaserJSON.retinfo[i].giftimg);
             this.giftsobject[phaserJSON.retinfo[i].giftid] = i;
         }
+    }else{
+      alert('服务器故障')
     }
     this.max_doll = phaserJSON.retinfo.length
   },

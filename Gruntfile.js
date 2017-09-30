@@ -15,7 +15,7 @@ module.exports = function (grunt) {
       mutile: {
         files: {
           'build/core.js': ['src/Boot.js',
-            'src/FailMenu.js', 'src/Game.js', 'src/MainMenu.js', 'src/Preloader.js']
+            'src/Preloader.js', 'src/Game.js', 'src/FailMenu.js',  'src/MainMenu.js']
         }
       }
     },
