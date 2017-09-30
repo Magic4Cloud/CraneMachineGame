@@ -30,7 +30,7 @@ BasicGame.FailMenu.prototype = {
     this.add.sprite(404, 200, 'regret')
     this.playButton = this.add.button(320, 720, 'returnbtn', this.startGame, this);
     this.game.add.sprite(460, 950, 'text2');
-    openError();
+
   },
 
   update: function () {
@@ -45,8 +45,8 @@ BasicGame.FailMenu.prototype = {
     //this.music.stop();
 
     //  And start the actual game
-    if(openFaceDecect){
-      openFaceDecect()
+    if(openError){
+      openError();
     }
 
 

@@ -34,7 +34,7 @@ BasicGame.Game.prototype = {
   giftsobject: {},
   claw_length : 520,
   dollOffsetX: 75,
-  winprize: 0,
+  winprize: null,
   dollOffsetY: 75,
   ovalWidth: 320,
   ovalHeight: 40,
@@ -69,14 +69,16 @@ BasicGame.Game.prototype = {
     this.timer.stop();
     this.add.sprite(860, 52, 'topright');
     console.log(result)
-    var ret
+    var ret;
     try{
       ret = JSON.parse(result)
     }catch(e){
       alert('服务器故障')
     }
-    console.log(ret)
+    console.log(ret.retinfo.giftid)
+
     this.winprize = this.giftsobject[ret.retinfo.giftid];
+    console.log(this.winprize)
     this.claw_state = 2;
   },
 
@@ -251,7 +253,8 @@ BasicGame.Game.prototype = {
     // Stop music, delete sprites, purge caches, free resources, all that
     // good stuff.
     // Then let's go back to the main menu.
-    if(this.winprize){
+    console.log(this.winprize)
+    if(this.winprize || this.winprize == 0){
       this.state.start('MainMenu', true, false, this.winprize);
     }else{
       this.state.start('FailMenu', true, false);
