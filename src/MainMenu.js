@@ -13,13 +13,6 @@ BasicGame.MainMenu.prototype = {
   },
 
   create: function () {
-
-    //  We've already preloaded our assets, so let's kick right into the Main Menu itself.
-    //  Here all we're doing is playing some music and adding a picture and button
-    //  Naturally I expect you to do something significantly better :)
-
-    //this.music = this.add.audio('bgm');
-    //this.music.play();
     this.background = this.add.sprite(0, 0, 'preloaderBackground');
 
     this.pg = this.add.sprite(0, 0, 'gotchapg');
@@ -31,7 +24,6 @@ BasicGame.MainMenu.prototype = {
     this.playButton = this.add.button(320, 720, 'returnbtn', this.startGame, this);
     this.game.add.sprite(460, 950,
         'text2');
-    console.log(this.hitGift)
   },
 
   update: function () {
@@ -47,7 +39,11 @@ BasicGame.MainMenu.prototype = {
 
     //  And start the actual game
     if(openFaceDecect){
-      openFaceDecect()
+      try{
+        openFaceDecect()
+      }catch(e){
+
+      }
     }
 
 

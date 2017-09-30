@@ -50,7 +50,11 @@ BasicGame.FailMenu.prototype = {
 
     //  And start the actual game
     if(openFaceDecect){
-      openFaceDecect()
+      try{
+        openFaceDecect()
+      }catch(e){
+
+      }
     }
   }
 };
