@@ -69,7 +69,12 @@ BasicGame.Game.prototype = {
     this.timer.stop();
     this.add.sprite(860, 52, 'topright');
     console.log(result)
-    var ret = JSON.parse(result)
+    var ret
+    try{
+      ret = JSON.parse(result)
+    }catch(e){
+      alert('服务器故障')
+    }
     console.log(ret)
     this.winprize = this.giftsobject[ret.retinfo.giftid];
     this.claw_state = 2;
@@ -97,7 +102,7 @@ BasicGame.Game.prototype = {
       }
 
 
-      this.hitGift = this.game.add.sprite(580 - this.dollOffsetX, 690,
+      this.hitGift = this.game.add.sprite(545 - this.dollOffsetX, 700,
         'sprites' + seed);
       this.game.world.bringToTop(this.gifts);
     } else {

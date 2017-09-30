@@ -6,7 +6,7 @@ module.exports = function (grunt) {
         tasks: ['jshint:gruntfile'],
       },
       src: {
-        files: ['app/assets/**/*.js', 'app/assets/**/*.css',  'app/assets/**/*.scss'],
+        files: ['src/**/*.js'],
         tasks: ['build'],
       }
     },
