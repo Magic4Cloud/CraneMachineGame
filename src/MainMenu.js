@@ -24,7 +24,7 @@ BasicGame.MainMenu.prototype = {
 
     this.pg = this.add.sprite(0, 0, 'gotchapg');
     this.title = this.add.sprite(360, 160, 'success');
-    this.game.add.sprite(590 - 75, 330,
+    this.game.add.sprite(570 - 75, 330,
         'sprites' + this.giftIndex);
     this.game.add.sprite(420, 660,
         'text1');
