@@ -4,6 +4,7 @@ html{
 }
 body{
   height: 990px;
+  margin: 0px;
 }
 #game {
     /*width:90% !important;*/
