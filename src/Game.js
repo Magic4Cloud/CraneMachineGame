@@ -190,27 +190,6 @@ BasicGame.Game.prototype = {
     if(this.countdown <=0){
       this.state.start('FailMenu', true, false);
     }
-    // TODO
-    // for ( var i in this.gifts.children) {
-    //   var gift = this.gifts.children[i];
-    //   if(gift.key.match(/sprites/)){
-    //     if(gift.x >= (600 + this.ovalWidth - this.dollOffsetX)){
-    //       gift.rotateup = true;
-    //     }else if(gift.x <= (600 - this.ovalWidth - this.dollOffsetX)){
-    //       gift.rotateup = false;
-    //     }
-    //     if(!gift.rotateup){
-    //       gift.x += this.rotate_speed;
-    //       gift.y = 700 + Math.sqrt((this.ovalWidth*this.ovalWidth*this.ovalHeight*this.ovalHeight - this.ovalHeight*this.ovalHeight*(gift.x + this.dollOffsetX -600)*(gift.x + this.dollOffsetX -600))/(this.ovalWidth*this.ovalWidth)) - this.dollOffsetY;
-    //       gift.bringToTop();
-    //     }else if(gift.rotateup){
-    //       gift.x -= this.rotate_speed;
-    //       gift.y = 700 - Math.sqrt((this.ovalWidth*this.ovalWidth*this.ovalHeight*this.ovalHeight - this.ovalHeight*this.ovalHeight*(gift.x + this.dollOffsetX -600)*(gift.x + this.dollOffsetX -600))/(this.ovalWidth*this.ovalWidth)) - this.dollOffsetY;
-    //       gift.sendToBack();
-    //     }
-    //   }
-
-    // }
     if (this.claw_state == 2) {
       this.rotate_speed = 10;
       this.claw.y += this.claw_speed;
@@ -237,6 +216,27 @@ BasicGame.Game.prototype = {
       this.closeClaw(false);
       this.quitGame();
     }
+    for ( var i in this.gifts.children) {
+      var gift = this.gifts.children[i];
+      if(gift.key.match(/sprites/)){
+        if(gift.x >= (600 + this.ovalWidth - this.dollOffsetX)){
+          gift.rotateup = true;
+        }else if(gift.x <= (600 - this.ovalWidth - this.dollOffsetX)){
+          gift.rotateup = false;
+        }
+        if(!gift.rotateup){
+          gift.x += this.rotate_speed;
+          gift.y = 700 + Math.sqrt((this.ovalWidth*this.ovalWidth*this.ovalHeight*this.ovalHeight - this.ovalHeight*this.ovalHeight*(gift.x + this.dollOffsetX -600)*(gift.x + this.dollOffsetX -600))/(this.ovalWidth*this.ovalWidth)) - this.dollOffsetY;
+          gift.bringToTop();
+        }else if(gift.rotateup){
+          gift.x -= this.rotate_speed;
+          gift.y = 700 - Math.sqrt((this.ovalWidth*this.ovalWidth*this.ovalHeight*this.ovalHeight - this.ovalHeight*this.ovalHeight*(gift.x + this.dollOffsetX -600)*(gift.x + this.dollOffsetX -600))/(this.ovalWidth*this.ovalWidth)) - this.dollOffsetY;
+          gift.sendToBack();
+        }
+      }
+
+    }
+
 
   },
   quitGame : function(pointer) {
