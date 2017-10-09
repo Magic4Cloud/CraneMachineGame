@@ -45,7 +45,7 @@ BasicGame.Game.prototype = {
   claw_pip:null,
   claw_box:null,
   rotateup: true,
-  zero_point : [420,0],
+  zero_point : [420,120],
   gifts : null,
   layer : null,
   sfx_win : null,
