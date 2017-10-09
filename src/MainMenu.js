@@ -36,7 +36,7 @@ BasicGame.MainMenu.prototype = {
   },
 
   update: function () {
-    if(this.countdown <=0){
+    if(this.countdown == 0){
       this.startGame();
     }
     //  Do some nice funky main menu effect here
@@ -53,7 +53,6 @@ BasicGame.MainMenu.prototype = {
       try{
         openFaceDecect()
       }catch(e){
-        console.log(e)
       }
     }
 
