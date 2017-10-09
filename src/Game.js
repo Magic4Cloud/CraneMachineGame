@@ -177,10 +177,12 @@ BasicGame.Game.prototype = {
     this.timer = this.game.time.create(false);
     this.timer.loop(1000, this.checkTime, this);
     this.timer.start();
+    console.log(1);
+    console.log(1);
+    startGame('156','{"gender":{"value":"Male"},"age":{"value":33}}','{"retval":"ok","reterr":"","retinfo":{"giftid":"26"}}');
     try{
       onReady();
     }catch(e){
-
     }
   },
   update : function() {
