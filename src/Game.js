@@ -202,10 +202,9 @@ BasicGame.Game.prototype = {
       this.claw.y -= this.claw_speed;
       this.claw_rope.height -= this.claw_speed;
 
-      // TODO
-      // if (this.hitGift) {
-      //   this.hitGift.y -= this.claw_speed;
-      // }
+      if (this.hitGift) {
+        this.hitGift.y -= this.claw_speed;
+      }
       if (this.claw.y <= this.zero_point[1]) {
         this.claw.y = this.zero_point[1];
         this.claw_state = 4;
