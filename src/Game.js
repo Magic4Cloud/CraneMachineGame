@@ -100,8 +100,7 @@ BasicGame.Game.prototype = {
       for ( var i in this.gifts.children) {
         var gift = this.gifts.children[i];
         if(gift.key == ("sprites" + seed)){
-          //TODO
-          //this.gifts.removeChildAt(i)
+          this.gifts.removeChildAt(i)
         }
       }
 
@@ -178,9 +177,6 @@ BasicGame.Game.prototype = {
     this.timer = this.game.time.create(false);
     this.timer.loop(1000, this.checkTime, this);
     this.timer.start();
-    console.log(1);
-    console.log(1);
-    startGame('156','{"gender":{"value":"Male"},"age":{"value":33}}','{"retval":"ok","reterr":"","retinfo":{"giftid":"26"}}');
     try{
       onReady();
     }catch(e){
