@@ -32,7 +32,7 @@ BasicGame.Preloader.prototype = {
     //this.load.bitmapFont('caslon', 'fonts/caslon.png', 'fonts/caslon.xml');
     //  + lots of other required assets here
     this.load.crossOrigin = "Anonymous";
-    this.load.json('imglists', 'http://test97.guangguang.net.cn/~yinhd/treasure/index.php/qjxk/gift/getlist?userid=' + userid + '&code=' + code);
+    this.load.json('imglists', 'http://test97.guangguang.net.cn/~yinhd/treasure/index.php/qjxk/gift/getlist?openid=' + userid + '&code=' + code);
 
     this.load.image('claw', 'assets/sprites/claw_open.png');
     this.load.image('claw_closed', 'assets/sprites/claw_closed.png');
