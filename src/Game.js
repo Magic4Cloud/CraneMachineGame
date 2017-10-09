@@ -100,7 +100,8 @@ BasicGame.Game.prototype = {
       for ( var i in this.gifts.children) {
         var gift = this.gifts.children[i];
         if(gift.key == ("sprites" + seed)){
-          this.gifts.removeChildAt(i)
+          //TODO
+          //this.gifts.removeChildAt(i)
         }
       }
 
