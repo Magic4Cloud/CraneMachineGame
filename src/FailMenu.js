@@ -7,7 +7,13 @@ BasicGame.FailMenu = function (game) {
 };
 
 BasicGame.FailMenu.prototype = {
-
+  timer: null,
+  countdown: 15,
+  checkTime: function(){
+    if(this.countdown > 0){
+      this.countdown-=1;
+    }
+  },
   create: function () {
 
     //  We've already preloaded our assets, so let's kick right into the Main Menu itself.
@@ -37,9 +43,15 @@ BasicGame.FailMenu.prototype = {
 
       }
     }
+    this.timer = this.game.time.create(false);
+    this.timer.loop(1000, this.checkTime, this);
+    this.timer.start();
   },
   update: function () {
-
+    if(this.countdown <=0){
+      this.timer.stop();
+      this.startGame;
+    }
     //  Do some nice funky main menu effect here
 
   },
@@ -53,7 +65,7 @@ BasicGame.FailMenu.prototype = {
       try{
         openFaceDecect()
       }catch(e){
-
+        console.log(e);
       }
     }
   }

@@ -8,10 +8,16 @@ BasicGame.MainMenu = function (game) {
 
 BasicGame.MainMenu.prototype = {
   giftIndex: null,
+  timer: null,
+  countdown: 15,
   init: function(giftIndex){
     this.giftIndex = giftIndex;
   },
-
+  checkTime: function(){
+    if(this.countdown > 0){
+      this.countdown-=1;
+    }
+  },
   create: function () {
     this.background = this.add.sprite(0, 0, 'preloaderBackground');
 
@@ -24,10 +30,16 @@ BasicGame.MainMenu.prototype = {
     this.playButton = this.add.button(320, 720, 'returnbtn', this.startGame, this);
     this.game.add.sprite(460, 950,
         'text2');
+    this.timer = this.game.time.create(false);
+    this.timer.loop(1000, this.checkTime, this);
+    this.timer.start();
   },
 
   update: function () {
-
+    if(this.countdown <=0){
+      this.timer.stop();
+      this.startGame;
+    }
     //  Do some nice funky main menu effect here
 
   },
@@ -42,7 +54,7 @@ BasicGame.MainMenu.prototype = {
       try{
         openFaceDecect()
       }catch(e){
-
+        console.log(e)
       }
     }
 
