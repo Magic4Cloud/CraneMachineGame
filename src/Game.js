@@ -194,17 +194,17 @@ BasicGame.Game.prototype = {
       if(gift.key.match(/sprites/)){
         if(gift.x >= (600 + this.ovalWidth - this.dollOffsetX)){
           gift.rotateup = true;
-          gift.sendToBack();
         }else if(gift.x <= (600 - this.ovalWidth - this.dollOffsetX)){
-          gift.bringToTop();
           gift.rotateup = false;
         }
         if(!gift.rotateup){
           gift.x += this.rotate_speed;
           gift.y = 700 + Math.sqrt((this.ovalWidth*this.ovalWidth*this.ovalHeight*this.ovalHeight - this.ovalHeight*this.ovalHeight*(gift.x + this.dollOffsetX -600)*(gift.x + this.dollOffsetX -600))/(this.ovalWidth*this.ovalWidth)) - this.dollOffsetY;
+          gift.bringToTop();
         }else if(gift.rotateup){
           gift.x -= this.rotate_speed;
           gift.y = 700 - Math.sqrt((this.ovalWidth*this.ovalWidth*this.ovalHeight*this.ovalHeight - this.ovalHeight*this.ovalHeight*(gift.x + this.dollOffsetX -600)*(gift.x + this.dollOffsetX -600))/(this.ovalWidth*this.ovalWidth)) - this.dollOffsetY;
+          gift.sendToBack();
         }
       }
 
