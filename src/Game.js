@@ -72,7 +72,7 @@ BasicGame.Game.prototype = {
     try{
       ret = JSON.parse(result)
     }catch(e){
-      alert('服务器故障')
+
     }
     console.log(ret.retinfo.giftid)
 
@@ -122,7 +122,7 @@ BasicGame.Game.prototype = {
             this.giftsobject[phaserJSON.retinfo[i].giftid] = i;
         }
     }else{
-      alert('服务器故障')
+
     }
     this.max_doll = phaserJSON.retinfo.length
   },
