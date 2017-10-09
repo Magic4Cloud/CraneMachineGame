@@ -37,8 +37,7 @@ BasicGame.MainMenu.prototype = {
 
   update: function () {
     if(this.countdown <=0){
-      this.timer.stop();
-      this.startGame;
+      this.startGame();
     }
     //  Do some nice funky main menu effect here
 

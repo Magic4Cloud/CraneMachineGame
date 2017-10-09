@@ -11,6 +11,7 @@ BasicGame.FailMenu.prototype = {
   countdown: 15,
   checkTime: function(){
     if(this.countdown > 0){
+      console.log(this.countdown);
       this.countdown-=1;
     }
   },
@@ -49,8 +50,7 @@ BasicGame.FailMenu.prototype = {
   },
   update: function () {
     if(this.countdown <=0){
-      this.timer.stop();
-      this.startGame;
+      this.startGame();
     }
     //  Do some nice funky main menu effect here
 
