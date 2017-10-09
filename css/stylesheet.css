@@ -1,5 +1,10 @@
 
-
+html{
+  height: 990px;
+}
+body{
+  height: 990px;
+}
 #game {
     /*width:90% !important;*/
     width: 1080px;
