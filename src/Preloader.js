@@ -20,7 +20,7 @@ BasicGame.Preloader.prototype = {
     //  What that does is automatically crop the sprite from 0 to full-width
     //  as the files below are loaded in.
 
-    var userid = this.game.net.getQueryString('userid');
+    var userid = this.game.net.getQueryString('userId');
     var code = this.game.net.getQueryString('code');
     this.load.setPreloadSprite(this.preloadBar);
 
