@@ -1,0 +1,17 @@
+
+html{
+  height: 990px;
+}
+body{
+  height: 990px;
+  margin: 0px;
+}
+#game {
+    /*width:90% !important;*/
+    width: 1080px;
+    height: 990px;
+    margin: 0 auto;
+    /*border-radius: 10px;*/
+    /*margin-left: auto !important;*/
+    /*margin-right:auto !important;*/
+}
