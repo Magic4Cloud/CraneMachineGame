@@ -69,15 +69,20 @@ BasicGame.Game.prototype = {
     this.timer.stop();
     this.add.sprite(860, 52, 'topright');
     var ret;
-    try{
-      ret = JSON.parse(result)
-    }catch(e){
+    var self = this;
 
+    try{
+      ret = JSON.parse(result);
+    }catch(e){
+      self.quitGame();
+      return;
     }
-    console.log(ret.retinfo.giftid)
+    if(!ret){
+      this.quitGame();
+      return;
+    }
 
     this.winprize = this.giftsobject[ret.retinfo.giftid];
-    console.log(this.winprize)
     this.claw_state = 2;
   },
   stopcountdown: function(){
