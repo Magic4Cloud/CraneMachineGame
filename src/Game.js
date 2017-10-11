@@ -40,7 +40,7 @@ BasicGame.Game.prototype = {
   ovalHeight: 40,
   claw_state : 0,
   claw_speed : 5,
-  rotate_speed: 2,
+  rotate_speed: 10,
   claw_rope:null,
   claw_pip:null,
   claw_box:null,
@@ -192,7 +192,7 @@ BasicGame.Game.prototype = {
       this.state.start('FailMenu', true, false);
     }
     if (this.claw_state == 2) {
-      this.rotate_speed = 10;
+      this.rotate_speed = 20;
       this.claw.y += this.claw_speed;
       this.claw_rope.height += this.claw_speed;
       if (this.claw.y >= this.claw_length) {
@@ -211,7 +211,7 @@ BasicGame.Game.prototype = {
         this.claw_state = 4;
       }
     } else if (this.claw_state == 4) {
-      this.rotate_speed = 2;
+      this.rotate_speed = 10;
       this.claw_state = 0;
       this.closeClaw(false);
       this.quitGame();
