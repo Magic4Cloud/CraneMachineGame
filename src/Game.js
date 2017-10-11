@@ -241,6 +241,7 @@ BasicGame.Game.prototype = {
     // good stuff.
     // Then let's go back to the main menu.
     console.log(this.winprize)
+    startSignal.removeAll();
     if(this.winprize || this.winprize == 0){
       this.state.start('MainMenu', true, false, this.winprize);
     }else{
