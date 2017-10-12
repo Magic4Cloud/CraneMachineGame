@@ -31,12 +31,12 @@ BasicGame.Preloader.prototype = {
     //this.load.audio('titleMusic', ['audio/main_menu.mp3']);
     //this.load.bitmapFont('caslon', 'fonts/caslon.png', 'fonts/caslon.xml');
     //  + lots of other required assets here
-    this.load.crossOrigin = "Anonymous";
-    this.load.json('imglists', 'http://test97.guangguang.net.cn/~yinhd/treasure/index.php/qjxk/gift/getlist?openid=' + userid + '&code=' + code);
+    this.load.crossOrigin = "file:///android_asset/game/index.html";
+    this.load.json('imglists', 'http://wx.guangguang.net.cn/treasure/index.php/qjxk/gift/getlist?openid=' + userid + '&code=' + code);
 
-    this.load.image('claw', 'assets/sprites/claw_open.png');
-    this.load.image('claw_closed', 'assets/sprites/claw_closed.png');
-    this.load.image('claw_rope', 'assets/sprites/claw_rope.png');
+    this.load.image('claw', './assets/sprites/claw_open.png');
+    this.load.image('claw_closed', './assets/sprites/claw_closed.png');
+    this.load.image('claw_rope', './assets/sprites/claw_rope.png');
         // for(var i = 1;i < 11;i++){
     //  this.load.image('sprite_' + i,'assets/sprites/' + i + '.png');
          //    this.load.image('sprite_' + i + "1",'assets/sprites/' + i + '1.png');
@@ -44,21 +44,21 @@ BasicGame.Preloader.prototype = {
 
     //this.load.image('btn_play_up','assets/button/btn_play_up.png');
     //this.load.image('sprites1', 'http://seopic.699pic.com/photo/50001/1802.jpg_wh1200.jpg');
-    this.load.image('countdown', 'images/count-down.png');
-    this.load.image('topframe', 'images/top-frame.png');
-    this.load.image('topmask', 'images/top-mask.png');
-    this.load.image('topleft', 'images/topleft.png');
-    this.load.image('topright', 'images/topright.png');
-    this.load.image('mask', 'images/mask.png');
-    this.load.image('fail', 'images/fail.png');
-    this.load.image('regret', 'images/regret.png');
+    this.load.image('countdown', './images/count-down.png');
+    this.load.image('topframe', './images/top-frame.png');
+    this.load.image('topmask', './images/top-mask.png');
+    this.load.image('topleft', './images/topleft.png');
+    this.load.image('topright', './images/topright.png');
+    this.load.image('mask', './images/mask.png');
+    this.load.image('fail', './images/fail.png');
+    this.load.image('regret', './images/regret.png');
 
 
-    this.load.image('returnbtn', 'assets/sprites/returnbtn.png');
-    this.load.image('gotchapg', 'assets/sprites/gotchapg.png');
-    this.load.image('success', 'assets/sprites/success.png');
-    this.load.image('text1', 'assets/sprites/text1.png');
-    this.load.image('text2', 'assets/sprites/text2.png');
+    this.load.image('returnbtn', './assets/sprites/returnbtn.png');
+    this.load.image('gotchapg', './assets/sprites/gotchapg.png');
+    this.load.image('success', './assets/sprites/success.png');
+    this.load.image('text1', './assets/sprites/text1.png');
+    this.load.image('text2', './assets/sprites/text2.png');
 
 
     //game.load.json('imglists', 'http://run.plnkr.co/plunks/v8xyYN64V4nqCshgjKms/data-1.json');

@@ -46,5 +46,5 @@ module.exports = function (grunt) {
   //grunt.registerTask('build', ['cachebuster:build', 'refreshcach']);
   //grunt.registerTask('uncss', ['uncss']);
 
-  grunt.registerTask('build', ['concat', 'uglify']);
+  grunt.registerTask('build', ['concat']);
 };

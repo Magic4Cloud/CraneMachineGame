@@ -40,11 +40,11 @@ BasicGame.Boot.prototype = {
     },
 
     preload: function () {
-
+        this.load.crossOrigin = "file:///android_asset/game/index.html";
         //  Here we load the assets required for our preloader (in this case a background and a loading bar)
-        this.load.image('preloaderBackground', 'images/bg.png');
+        this.load.image('preloaderBackground', './images/bg.png');
 
-        this.load.image('preloaderBar', 'images/preloader_bar.png');
+        this.load.image('preloaderBar', './images/preloader_bar.png');
 
     },
 

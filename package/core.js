@@ -40,7 +40,7 @@ BasicGame.Boot.prototype = {
     },
 
     preload: function () {
-        this.load.crossOrigin = "file:///android_asset/game/index.html";
+
         //  Here we load the assets required for our preloader (in this case a background and a loading bar)
         this.load.image('preloaderBackground', './images/bg.png');
 
@@ -116,8 +116,8 @@ BasicGame.Preloader.prototype = {
     //this.load.audio('titleMusic', ['audio/main_menu.mp3']);
     //this.load.bitmapFont('caslon', 'fonts/caslon.png', 'fonts/caslon.xml');
     //  + lots of other required assets here
-    this.load.crossOrigin = "file:///android_asset/game/index.html";
-    this.load.json('imglists', 'http://wx.guangguang.net.cn/treasure/index.php/qjxk/gift/getlist?openid=' + userid + '&code=' + code);
+    this.load.crossOrigin = "Anonymous";
+    this.load.json('imglists', 'http://test97.guangguang.net.cn/~yinhd/treasure/index.php/qjxk/gift/getlist?openid=' + userid + '&code=' + code);
 
     this.load.image('claw', './assets/sprites/claw_open.png');
     this.load.image('claw_closed', './assets/sprites/claw_closed.png');
@@ -217,10 +217,9 @@ BasicGame.Game.prototype = {
   dollOffsetY: 75,
   ovalWidth: 320,
   ovalHeight: 40,
-  giftready: false,
   claw_state : 0,
   claw_speed : 5,
-  rotate_speed: 5,
+  rotate_speed: 10,
   claw_rope:null,
   claw_pip:null,
   claw_box:null,
@@ -257,7 +256,7 @@ BasicGame.Game.prototype = {
       self.quitGame();
       return;
     }
-    if(!ret || ret.retval == 'fail'){
+    if(!ret){
       this.quitGame();
       return;
     }
@@ -290,7 +289,7 @@ BasicGame.Game.prototype = {
       }
 
       this.hitGift = this.game.add.sprite(545 - this.dollOffsetX, 700, 'sprites' + seed);
-      //this.game.world.bringToTop(this.gifts);
+      this.game.world.bringToTop(this.gifts);
     } else {
       this.claw.loadTexture('claw');
     }
@@ -364,7 +363,6 @@ BasicGame.Game.prototype = {
     this.timer.start();
     try{
       onReady();
-      this.giftready = true;
     }catch(e){
     }
   },
@@ -372,54 +370,53 @@ BasicGame.Game.prototype = {
     if(this.countdown <=0){
       this.state.start('FailMenu', true, false);
     }
-    if(this.giftready){
-      if (this.claw_state == 2) {
-        this.rotate_speed = 20;
-        this.claw.y += this.claw_speed;
-        this.claw_rope.height += this.claw_speed;
-        if (this.claw.y >= this.claw_length) {
-          this.closeClaw(true);
-          this.claw_state = 3;
-        }
-      } else if (this.claw_state == 3) {
-        this.claw.y -= this.claw_speed;
-        this.claw_rope.height -= this.claw_speed;
-
-        if (this.hitGift) {
-          this.hitGift.y -= this.claw_speed;
-        }
-        if (this.claw.y <= this.zero_point[1]) {
-          this.claw.y = this.zero_point[1];
-          this.claw_state = 4;
-        }
-      } else if (this.claw_state == 4) {
-        this.rotate_speed = 5;
-        this.claw_state = 0;
-        this.closeClaw(false);
-        this.quitGame();
+    if (this.claw_state == 2) {
+      this.rotate_speed = 20;
+      this.claw.y += this.claw_speed;
+      this.claw_rope.height += this.claw_speed;
+      if (this.claw.y >= this.claw_length) {
+        this.closeClaw(true);
+        this.claw_state = 3;
       }
-      for ( var i in this.gifts.children) {
-        var gift = this.gifts.children[i];
-        if(gift.key.match(/sprites/)){
-          if(gift.x >= (600 + this.ovalWidth - this.dollOffsetX)){
-            gift.rotateup = true;
-          }else if(gift.x <= (600 - this.ovalWidth - this.dollOffsetX)){
-            gift.rotateup = false;
-          }
-          if(!gift.rotateup){
-            //gift.bringToTop();
-            gift.x += this.rotate_speed;
-            gift.y = 700 + Math.sqrt((this.ovalWidth*this.ovalWidth*this.ovalHeight*this.ovalHeight - this.ovalHeight*this.ovalHeight*(gift.x + this.dollOffsetX -600)*(gift.x + this.dollOffsetX -600))/(this.ovalWidth*this.ovalWidth)) - this.dollOffsetY;
+    } else if (this.claw_state == 3) {
+      this.claw.y -= this.claw_speed;
+      this.claw_rope.height -= this.claw_speed;
 
-          }else if(gift.rotateup){
-            //gift.sendToBack();
-            gift.x -= this.rotate_speed;
-            gift.y = 700 - Math.sqrt((this.ovalWidth*this.ovalWidth*this.ovalHeight*this.ovalHeight - this.ovalHeight*this.ovalHeight*(gift.x + this.dollOffsetX -600)*(gift.x + this.dollOffsetX -600))/(this.ovalWidth*this.ovalWidth)) - this.dollOffsetY;
-          }
-        }
-
+      if (this.hitGift) {
+        this.hitGift.y -= this.claw_speed;
       }
+      if (this.claw.y <= this.zero_point[1]) {
+        this.claw.y = this.zero_point[1];
+        this.claw_state = 4;
+      }
+    } else if (this.claw_state == 4) {
+      this.rotate_speed = 10;
+      this.claw_state = 0;
+      this.closeClaw(false);
+      this.quitGame();
     }
+    for ( var i in this.gifts.children) {
+      var gift = this.gifts.children[i];
+      if(gift.key.match(/sprites/)){
+        if(gift.x >= (600 + this.ovalWidth - this.dollOffsetX)){
+          gift.rotateup = true;
+        }else if(gift.x <= (600 - this.ovalWidth - this.dollOffsetX)){
+          gift.rotateup = false;
+        }
+        if(!gift.rotateup){
+          gift.x += this.rotate_speed;
+          gift.y = 700 + Math.sqrt((this.ovalWidth*this.ovalWidth*this.ovalHeight*this.ovalHeight - this.ovalHeight*this.ovalHeight*(gift.x + this.dollOffsetX -600)*(gift.x + this.dollOffsetX -600))/(this.ovalWidth*this.ovalWidth)) - this.dollOffsetY;
+          gift.bringToTop();
+        }else if(gift.rotateup){
+          gift.x -= this.rotate_speed;
+          gift.y = 700 - Math.sqrt((this.ovalWidth*this.ovalWidth*this.ovalHeight*this.ovalHeight - this.ovalHeight*this.ovalHeight*(gift.x + this.dollOffsetX -600)*(gift.x + this.dollOffsetX -600))/(this.ovalWidth*this.ovalWidth)) - this.dollOffsetY;
+          gift.sendToBack();
+        }
+      }
+
+    }
+
+
   },
   quitGame : function(pointer) {
 
@@ -428,12 +425,10 @@ BasicGame.Game.prototype = {
     // good stuff.
     // Then let's go back to the main menu.
     console.log(this.winprize)
-    //startSignal.removeAll();
+    startSignal.removeAll();
     if(this.winprize || this.winprize == 0){
-      console.log('win')
       this.state.start('MainMenu', true, false, this.winprize);
     }else{
-      console.log('fail')
       this.state.start('FailMenu', true, false);
     }
 
