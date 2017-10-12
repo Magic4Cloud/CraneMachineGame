@@ -339,12 +339,14 @@ BasicGame.Game.prototype = {
       if(i < this.max_doll/2){
         rotateup = false;
         x = 600 - this.ovalWidth + (this.ovalWidth*2/Math.floor(this.max_doll/2))*i;
-        y = 700 - Math.sqrt((this.ovalWidth*this.ovalWidth*this.ovalHeight*this.ovalHeight - this.ovalHeight*this.ovalHeight*(x -600)*(x -600))/(this.ovalWidth*this.ovalWidth));
+        y = 700 - this.dollOffsetY - (this.ovalWidth - Math.abs(gift.x - this.dollOffsetX -600))*this.ovalHeight/this.ovalWidth;
+        //y = 700 - Math.sqrt((this.ovalWidth*this.ovalWidth*this.ovalHeight*this.ovalHeight - this.ovalHeight*this.ovalHeight*(x -600)*(x -600))/(this.ovalWidth*this.ovalWidth));
         this.spawnDoll(i, x, y, rotateup, false);
       }else{
         rotateup = true;
         x = 600 + this.ovalWidth - (this.ovalWidth*2/Math.floor(this.max_doll/2 + 1)) * (i - Math.floor(this.max_doll/2))
-        y = 700 + Math.sqrt((this.ovalWidth*this.ovalWidth*this.ovalHeight*this.ovalHeight - this.ovalHeight*this.ovalHeight*(x -600)*(x -600))/(this.ovalWidth*this.ovalWidth));
+        y = 700 - this.dollOffsetY + (this.ovalWidth - Math.abs(gift.x - this.dollOffsetX -600))*this.ovalHeight/this.ovalWidth;
+        //y = 700 + Math.sqrt((this.ovalWidth*this.ovalWidth*this.ovalHeight*this.ovalHeight - this.ovalHeight*this.ovalHeight*(x -600)*(x -600))/(this.ovalWidth*this.ovalWidth));
         this.spawnDoll(i, x, y, rotateup, true);
       }
     }
@@ -409,12 +411,14 @@ BasicGame.Game.prototype = {
           if(!gift.rotateup){
             //gift.bringToTop();
             gift.x += this.rotate_speed;
-            gift.y = 700 + Math.sqrt((this.ovalWidth*this.ovalWidth*this.ovalHeight*this.ovalHeight - this.ovalHeight*this.ovalHeight*(gift.x + this.dollOffsetX -600)*(gift.x + this.dollOffsetX -600))/(this.ovalWidth*this.ovalWidth)) - this.dollOffsetY;
+            gift.y = 700 - this.dollOffsetY + (this.ovalWidth - Math.abs(gift.x - this.dollOffsetX -600))*this.ovalHeight/this.ovalWidth;
+            //gift.y = 700 + Math.sqrt((this.ovalWidth*this.ovalWidth*this.ovalHeight*this.ovalHeight - this.ovalHeight*this.ovalHeight*(gift.x + this.dollOffsetX -600)*(gift.x + this.dollOffsetX -600))/(this.ovalWidth*this.ovalWidth)) - this.dollOffsetY;
 
           }else if(gift.rotateup){
             //gift.sendToBack();
             gift.x -= this.rotate_speed;
-            gift.y = 700 - Math.sqrt((this.ovalWidth*this.ovalWidth*this.ovalHeight*this.ovalHeight - this.ovalHeight*this.ovalHeight*(gift.x + this.dollOffsetX -600)*(gift.x + this.dollOffsetX -600))/(this.ovalWidth*this.ovalWidth)) - this.dollOffsetY;
+            gift.y = 700 - this.dollOffsetY - (this.ovalWidth - Math.abs(gift.x - this.dollOffsetX -600))*this.ovalHeight/this.ovalWidth;
+            //gift.y = 700 - Math.sqrt((this.ovalWidth*this.ovalWidth*this.ovalHeight*this.ovalHeight - this.ovalHeight*this.ovalHeight*(gift.x + this.dollOffsetX -600)*(gift.x + this.dollOffsetX -600))/(this.ovalWidth*this.ovalWidth)) - this.dollOffsetY;
           }
         }
 

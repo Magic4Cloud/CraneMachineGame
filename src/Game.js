@@ -121,16 +121,22 @@ BasicGame.Game.prototype = {
     this.background = this.add.sprite(0, 0, 'preloaderBackground');
     this.preloadBar = this.add.sprite(340, 345, 'preloaderBar');
     this.load.setPreloadSprite(this.preloadBar);
-    var phaserJSON = this.game.cache.getJSON('imglists');
-    if(phaserJSON.retval === 'ok'){
+    var phaserJSON;
+    try{
+      phaserJSON = this.game.cache.getJSON('imglists');
+    }catch(e){
+
+    }
+    if(phaserJSON && phaserJSON.retval === 'ok'){
         for(var i=0; i < phaserJSON.retinfo.length; i++){
             this.load.image('sprites' + i, phaserJSON.retinfo[i].giftimg);
             this.giftsobject[phaserJSON.retinfo[i].giftid] = i;
         }
+        this.max_doll = phaserJSON.retinfo.length
     }else{
-
+      this.max_doll = 0;
     }
-    this.max_doll = phaserJSON.retinfo.length
+
   },
   checkTime: function(){
     if(this.countdown > 0){
@@ -160,12 +166,14 @@ BasicGame.Game.prototype = {
       if(i < this.max_doll/2){
         rotateup = false;
         x = 600 - this.ovalWidth + (this.ovalWidth*2/Math.floor(this.max_doll/2))*i;
-        y = 700 - Math.sqrt((this.ovalWidth*this.ovalWidth*this.ovalHeight*this.ovalHeight - this.ovalHeight*this.ovalHeight*(x -600)*(x -600))/(this.ovalWidth*this.ovalWidth));
+        y = 700 - (this.ovalWidth - Math.abs(x + this.dollOffsetX -600))*this.ovalHeight/this.ovalWidth;
+        //y = 700 - Math.sqrt((this.ovalWidth*this.ovalWidth*this.ovalHeight*this.ovalHeight - this.ovalHeight*this.ovalHeight*(x -600)*(x -600))/(this.ovalWidth*this.ovalWidth));
         this.spawnDoll(i, x, y, rotateup, false);
       }else{
         rotateup = true;
         x = 600 + this.ovalWidth - (this.ovalWidth*2/Math.floor(this.max_doll/2 + 1)) * (i - Math.floor(this.max_doll/2))
-        y = 700 + Math.sqrt((this.ovalWidth*this.ovalWidth*this.ovalHeight*this.ovalHeight - this.ovalHeight*this.ovalHeight*(x -600)*(x -600))/(this.ovalWidth*this.ovalWidth));
+        y = 700 + (this.ovalWidth - Math.abs(x + this.dollOffsetX -600))*this.ovalHeight/this.ovalWidth;
+        //y = 700 + Math.sqrt((this.ovalWidth*this.ovalWidth*this.ovalHeight*this.ovalHeight - this.ovalHeight*this.ovalHeight*(x -600)*(x -600))/(this.ovalWidth*this.ovalWidth));
         this.spawnDoll(i, x, y, rotateup, true);
       }
     }
@@ -183,9 +191,12 @@ BasicGame.Game.prototype = {
     this.timer = this.game.time.create(false);
     this.timer.loop(1000, this.checkTime, this);
     this.timer.start();
+    var self = this;
+    console.log('ready')
     try{
+      self.giftready = true;
       onReady();
-      this.giftready = true;
+
     }catch(e){
     }
   },
@@ -229,13 +240,18 @@ BasicGame.Game.prototype = {
           }
           if(!gift.rotateup){
             //gift.bringToTop();
+            gift.y = 700 - this.dollOffsetY + Math.abs((this.ovalWidth - Math.abs(gift.x + this.dollOffsetX -600)))*this.ovalHeight/this.ovalWidth;
             gift.x += this.rotate_speed;
-            gift.y = 700 + Math.sqrt((this.ovalWidth*this.ovalWidth*this.ovalHeight*this.ovalHeight - this.ovalHeight*this.ovalHeight*(gift.x + this.dollOffsetX -600)*(gift.x + this.dollOffsetX -600))/(this.ovalWidth*this.ovalWidth)) - this.dollOffsetY;
+
+            //gift.y = 700 + Math.sqrt((this.ovalWidth*this.ovalWidth*this.ovalHeight*this.ovalHeight - this.ovalHeight*this.ovalHeight*(gift.x + this.dollOffsetX -600)*(gift.x + this.dollOffsetX -600))/(this.ovalWidth*this.ovalWidth)) - this.dollOffsetY;
+
 
           }else if(gift.rotateup){
             //gift.sendToBack();
+            gift.y = 700 - this.dollOffsetY - Math.abs((this.ovalWidth - Math.abs(gift.x + this.dollOffsetX -600)))*this.ovalHeight/this.ovalWidth;
             gift.x -= this.rotate_speed;
-            gift.y = 700 - Math.sqrt((this.ovalWidth*this.ovalWidth*this.ovalHeight*this.ovalHeight - this.ovalHeight*this.ovalHeight*(gift.x + this.dollOffsetX -600)*(gift.x + this.dollOffsetX -600))/(this.ovalWidth*this.ovalWidth)) - this.dollOffsetY;
+
+            //gift.y = 700 - Math.sqrt((this.ovalWidth*this.ovalWidth*this.ovalHeight*this.ovalHeight - this.ovalHeight*this.ovalHeight*(gift.x + this.dollOffsetX -600)*(gift.x + this.dollOffsetX -600))/(this.ovalWidth*this.ovalWidth)) - this.dollOffsetY;
           }
         }
 
