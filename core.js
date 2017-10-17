@@ -220,6 +220,7 @@ BasicGame.Game.prototype = {
   giftready: false,
   claw_state : 0,
   claw_speed : 5,
+  shake: 0,
   rotate_speed: 5,
   claw_rope:null,
   claw_pip:null,
@@ -288,13 +289,11 @@ BasicGame.Game.prototype = {
           this.gifts.removeChildAt(i)
         }
       }
-
-      this.hitGift = this.game.add.sprite(545 - this.dollOffsetX, 700, 'sprites' + seed);
+      this.hitGift = this.game.add.sprite(this.claw.x + 45, 700, 'sprites' + seed);
       //this.game.world.bringToTop(this.gifts);
     } else {
       this.claw.loadTexture('claw');
     }
-
   },
   preload: function() {
     this.background = this.add.sprite(0, 0, 'preloaderBackground');
@@ -304,7 +303,6 @@ BasicGame.Game.prototype = {
     try{
       phaserJSON = this.game.cache.getJSON('imglists');
     }catch(e){
-
     }
     if(phaserJSON && phaserJSON.retval === 'ok'){
         for(var i=0; i < phaserJSON.retinfo.length; i++){
@@ -375,11 +373,11 @@ BasicGame.Game.prototype = {
     try{
       self.giftready = true;
       onReady();
-
     }catch(e){
     }
   },
   update : function() {
+    this.shake = Math.round(Math.random()*20) - 10;
     if(this.countdown <=0){
       this.state.start('FailMenu', true, false);
     }
@@ -387,7 +385,9 @@ BasicGame.Game.prototype = {
       if (this.claw_state == 2) {
         this.rotate_speed = 20;
         this.claw.y += this.claw_speed;
+        this.claw.x += this.shake;
         this.claw_rope.height += this.claw_speed;
+        this.claw_rope.x += this.shake;
         if (this.claw.y >= this.claw_length) {
           this.closeClaw(true);
           this.claw_state = 3;
