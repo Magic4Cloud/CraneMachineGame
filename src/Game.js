@@ -137,8 +137,8 @@ BasicGame.Game.prototype = {
 
   },
   checkTime: function(){
-    if(this.countdown > 0){
-      this.countdown-=1;
+    this.countdown-=1;
+    if(this.countdown >= 0){
       this.time_text.setText(this.countdown);
     }
   },
@@ -199,7 +199,7 @@ BasicGame.Game.prototype = {
   },
   update : function() {
     this.shake = Math.round(Math.random()*20) - 10;
-    if(this.countdown <=0){
+    if(this.countdown <=-2){
       this.state.start('FailMenu', true, false);
     }
     if(this.giftready){
@@ -254,7 +254,6 @@ BasicGame.Game.prototype = {
             //gift.y = 700 - Math.sqrt((this.ovalWidth*this.ovalWidth*this.ovalHeight*this.ovalHeight - this.ovalHeight*this.ovalHeight*(gift.x + this.dollOffsetX -600)*(gift.x + this.dollOffsetX -600))/(this.ovalWidth*this.ovalWidth)) - this.dollOffsetY;
           }
         }
-
       }
     }
   },
