@@ -69,7 +69,7 @@ BasicGame.Game.prototype = {
   },
   release : function(userId, faceJson, result) {
     this.timer.stop();
-    this.add.sprite(860, 52, 'topright');
+
     var ret;
     var self = this;
 
@@ -88,6 +88,7 @@ BasicGame.Game.prototype = {
     this.claw_state = 2;
   },
   stopcountdown: function(){
+    this.add.sprite(860, 52, 'topright');
     this.timer.stop();
   },
   spawnDoll: function(i, x, y, rotateup,back) {
@@ -205,10 +206,9 @@ BasicGame.Game.prototype = {
     }
     if(this.giftready){
       if(this.claw_state == 1) {
-        console.log(1)
         if(this.claw.x < 525){
-          this.claw.x += 5;
-          this.claw_rope.x += 5;
+          this.claw.x += 20;
+          this.claw_rope.x += 20;
         }else {
           this.claw_state = 5;
         }
@@ -238,8 +238,8 @@ BasicGame.Game.prototype = {
         this.quitGame();
       } else if (this.claw_state == 5) {
         if(this.claw.x > 315){
-          this.claw.x -= 5;
-          this.claw_rope.x -= 5;
+          this.claw.x -= 20;
+          this.claw_rope.x -= 20;
         }else {
           this.claw_state = 1;
         }
