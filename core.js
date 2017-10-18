@@ -370,24 +370,31 @@ BasicGame.Game.prototype = {
     this.timer.start();
     var self = this;
     console.log('ready')
+    this.claw_state = 1;
     try{
       self.giftready = true;
       onReady();
+      self.claw_state = 1;
     }catch(e){
     }
   },
   update : function() {
-    this.shake = Math.round(Math.random()*20) - 10;
     if(this.countdown <=-2){
       this.state.start('FailMenu', true, false);
     }
     if(this.giftready){
-      if (this.claw_state == 2) {
+      if(this.claw_state == 1) {
+        console.log(1)
+        if(this.claw.x < 525){
+          this.claw.x += 2;
+          this.claw_rope.x += 2;
+        }else {
+          this.claw_state = 5;
+        }
+      }else if (this.claw_state == 2) {
         this.rotate_speed = 20;
         this.claw.y += this.claw_speed;
-        this.claw.x += this.shake;
         this.claw_rope.height += this.claw_speed;
-        this.claw_rope.x += this.shake;
         if (this.claw.y >= this.claw_length) {
           this.closeClaw(true);
           this.claw_state = 3;
@@ -408,6 +415,13 @@ BasicGame.Game.prototype = {
         this.claw_state = 0;
         this.closeClaw(false);
         this.quitGame();
+      } else if (this.claw_state == 5) {
+        if(this.claw.x > 315){
+          this.claw.x -= 2;
+          this.claw_rope.x -= 2;
+        }else {
+          this.claw_state = 1;
+        }
       }
       for ( var i in this.gifts.children) {
         var gift = this.gifts.children[i];
