@@ -207,8 +207,8 @@ BasicGame.Game.prototype = {
       if(this.claw_state == 1) {
         console.log(1)
         if(this.claw.x < 525){
-          this.claw.x += 2;
-          this.claw_rope.x += 2;
+          this.claw.x += 5;
+          this.claw_rope.x += 5;
         }else {
           this.claw_state = 5;
         }
@@ -238,8 +238,8 @@ BasicGame.Game.prototype = {
         this.quitGame();
       } else if (this.claw_state == 5) {
         if(this.claw.x > 315){
-          this.claw.x -= 2;
-          this.claw_rope.x -= 2;
+          this.claw.x -= 5;
+          this.claw_rope.x -= 5;
         }else {
           this.claw_state = 1;
         }
