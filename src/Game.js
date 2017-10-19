@@ -148,7 +148,7 @@ BasicGame.Game.prototype = {
 
     this.gifts = this.game.add.group();
 
-    this.game.add.sprite(460, 950, 'text2');
+    this.game.add.sprite(460, 940, 'text2');
     this.claw = this.gifts.create(this.zero_point[0], this.zero_point[1], 'claw');
 
     this.closeClaw(false);

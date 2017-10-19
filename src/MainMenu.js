@@ -28,7 +28,7 @@ BasicGame.MainMenu.prototype = {
     this.game.add.sprite(420, 660,
         'text1');
     this.playButton = this.add.button(320, 720, 'returnbtn', this.startGame, this);
-    this.game.add.sprite(460, 950,
+    this.game.add.sprite(460, 940,
         'text2');
     this.timer = this.game.time.create(false);
     this.timer.loop(1000, this.checkTime, this);

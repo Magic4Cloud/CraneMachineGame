@@ -36,7 +36,7 @@ BasicGame.FailMenu.prototype = {
     this.add.sprite(220, 120, 'fail');
     this.add.sprite(404, 200, 'regret')
     this.playButton = this.add.button(320, 720, 'returnbtn', this.startGame, this);
-    this.game.add.sprite(460, 950, 'text2');
+    this.game.add.sprite(460, 940, 'text2');
     if(openError){
       try{
         openError();
