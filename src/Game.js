@@ -201,7 +201,7 @@ BasicGame.Game.prototype = {
     }
   },
   update : function() {
-    if(this.countdown <=-2){
+    if(this.countdown <=-5){
       this.state.start('FailMenu', true, false);
     }
     if(this.giftready){
