@@ -34,7 +34,7 @@
 
 var startSignal = new Phaser.Signal();
 var countdownSignal = new Phaser.Signal();
-
+var countdownStart = new Phaser.Signal();
 (function () {
 
   //  Create your Phaser game and inject it into the game div.
@@ -62,7 +62,9 @@ var countdownSignal = new Phaser.Signal();
   function pauseCountDown(){
     countdownSignal.dispatch();
   }
-
+  function startCountDown(){
+    countdownStart.dispatch();
+  }
 </script>
 </body>
 </html>

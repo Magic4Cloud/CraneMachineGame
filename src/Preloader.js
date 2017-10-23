@@ -32,7 +32,7 @@ BasicGame.Preloader.prototype = {
     //this.load.bitmapFont('caslon', 'fonts/caslon.png', 'fonts/caslon.xml');
     //  + lots of other required assets here
     this.load.crossOrigin = "file:///android_asset/game/index.html";
-    this.load.json('imglists', 'http://wx.guangguang.net.cn/treasure/index.php/qjxk/gift/getlist?openid=' + userid + '&code=' + code);
+    this.load.json('imglists', 'http://wx.guangguang.net.cn/treasure_game/index.php/qjxk/gift/getlist?openid=' + userid + '&code=' + code);
 
     this.load.image('claw', './assets/sprites/claw_open.png');
     this.load.image('claw_closed', './assets/sprites/claw_closed.png');

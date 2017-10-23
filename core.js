@@ -117,7 +117,7 @@ BasicGame.Preloader.prototype = {
     //this.load.bitmapFont('caslon', 'fonts/caslon.png', 'fonts/caslon.xml');
     //  + lots of other required assets here
     this.load.crossOrigin = "file:///android_asset/game/index.html";
-    this.load.json('imglists', 'http://wx.guangguang.net.cn/treasure/index.php/qjxk/gift/getlist?openid=' + userid + '&code=' + code);
+    this.load.json('imglists', 'http://wx.guangguang.net.cn/treasure_game/index.php/qjxk/gift/getlist?openid=' + userid + '&code=' + code);
 
     this.load.image('claw', './assets/sprites/claw_open.png');
     this.load.image('claw_closed', './assets/sprites/claw_closed.png');
@@ -268,7 +268,11 @@ BasicGame.Game.prototype = {
   },
   stopcountdown: function(){
     this.add.sprite(860, 52, 'topright');
+    this.add.sprite(840, 10, 'topframe');
     this.timer.stop();
+  },
+  startcountdown: function(){
+    this.timer.start();
   },
   spawnDoll: function(i, x, y, rotateup,back) {
     var index = Math.round(Math.random()+1);
@@ -301,10 +305,13 @@ BasicGame.Game.prototype = {
     this.preloadBar = this.add.sprite(340, 345, 'preloaderBar');
     this.load.setPreloadSprite(this.preloadBar);
     var phaserJSON;
+
     try{
       phaserJSON = this.game.cache.getJSON('imglists');
     }catch(e){
+      console.log(e);
     }
+    console.log(phaserJSON)
     if(phaserJSON && phaserJSON.retval === 'ok'){
         for(var i=0; i < phaserJSON.retinfo.length; i++){
             this.load.image('sprites' + i, phaserJSON.retinfo[i].giftimg);
@@ -336,7 +343,7 @@ BasicGame.Game.prototype = {
 
     startSignal.add(this.release, this);
     countdownSignal.add(this.stopcountdown, this);
-
+    countdownStart.add(this.startcountdown, this);
     //this.game.input.onDown.add(this.click, this);
     //this.game.input.onUp.add(this.release, this);
     for(var i = 0; i< this.max_doll; i++){
@@ -357,7 +364,6 @@ BasicGame.Game.prototype = {
     }
     this.add.sprite(4, 0, 'topmask');
     this.add.sprite(70, 10, 'topframe');
-    this.add.sprite(840, 10, 'topframe');
     this.add.sprite(98, 25, 'topleft');
     this.add.sprite(303, 10, 'countdown');
     this.time_text = this.game.add.text(540, 60, this.countdown, {
@@ -368,7 +374,7 @@ BasicGame.Game.prototype = {
     this.time_text.anchor.setTo(0.5, 0.5);
     this.timer = this.game.time.create(false);
     this.timer.loop(1000, this.checkTime, this);
-    this.timer.start();
+
     var self = this;
     console.log('ready')
     this.claw_state = 1;
