@@ -72,7 +72,9 @@ BasicGame.Game.prototype = {
 
     var ret;
     var self = this;
-
+    if(result == -1){
+      this.state.start('FailMenu', true, false, -1);
+    }
     try{
       ret = JSON.parse(result);
     }catch(e){

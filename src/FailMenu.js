@@ -9,6 +9,10 @@ BasicGame.FailMenu = function (game) {
 BasicGame.FailMenu.prototype = {
   timer: null,
   countdown: 15,
+  errorcode: 0,
+  init: function(errorcode){
+    this.errorcode = errorcode;
+  },
   checkTime: function(){
     if(this.countdown > 0){
       console.log(this.countdown);
@@ -32,8 +36,12 @@ BasicGame.FailMenu.prototype = {
     this.add.sprite(303, 10, 'countdown');
     this.add.sprite(0, 0, 'mask');
 
+    if(this.errorcode == -1){
+      this.add.sprite(220, 120, 'fail2');
+    }else{
+      this.add.sprite(220, 120, 'fail');
+    }
 
-    this.add.sprite(220, 120, 'fail');
     this.add.sprite(404, 200, 'regret')
     this.playButton = this.add.button(320, 720, 'returnbtn', this.startGame, this);
     this.game.add.sprite(460, 940, 'text2');

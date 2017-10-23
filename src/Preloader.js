@@ -51,6 +51,7 @@ BasicGame.Preloader.prototype = {
     this.load.image('topright', './images/topright.png');
     this.load.image('mask', './images/mask.png');
     this.load.image('fail', './images/fail.png');
+    this.load.image('fail2', './images/fail2.png');
     this.load.image('regret', './images/regret.png');
 
 
