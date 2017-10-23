@@ -117,7 +117,7 @@ BasicGame.Preloader.prototype = {
     //this.load.bitmapFont('caslon', 'fonts/caslon.png', 'fonts/caslon.xml');
     //  + lots of other required assets here
     this.load.crossOrigin = "file:///android_asset/game/index.html";
-    this.load.json('imglists', 'http://wx.guangguang.net.cn/treasure/index.php/qjxk/gift/getlist?openid=' + userid + '&code=' + code);
+    this.load.json('imglists', 'http://wx.guangguang.net.cn/treasure_game/index.php/qjxk/gift/getlist?openid=' + userid + '&code=' + code);
 
     this.load.image('claw', './assets/sprites/claw_open.png');
     this.load.image('claw_closed', './assets/sprites/claw_closed.png');
@@ -136,6 +136,7 @@ BasicGame.Preloader.prototype = {
     this.load.image('topright', './images/topright.png');
     this.load.image('mask', './images/mask.png');
     this.load.image('fail', './images/fail.png');
+    this.load.image('fail2', './images/fail2.png');
     this.load.image('regret', './images/regret.png');
 
 
@@ -248,10 +249,12 @@ BasicGame.Game.prototype = {
   },
   release : function(userId, faceJson, result) {
     this.timer.stop();
-    this.add.sprite(860, 52, 'topright');
+
     var ret;
     var self = this;
-
+    if(result == -1){
+      this.state.start('FailMenu', true, false, -1);
+    }
     try{
       ret = JSON.parse(result);
     }catch(e){
@@ -267,7 +270,12 @@ BasicGame.Game.prototype = {
     this.claw_state = 2;
   },
   stopcountdown: function(){
+    this.add.sprite(860, 52, 'topright');
+    this.add.sprite(840, 10, 'topframe');
     this.timer.stop();
+  },
+  startcountdown: function(){
+    this.timer.start();
   },
   spawnDoll: function(i, x, y, rotateup,back) {
     var index = Math.round(Math.random()+1);
@@ -300,10 +308,13 @@ BasicGame.Game.prototype = {
     this.preloadBar = this.add.sprite(340, 345, 'preloaderBar');
     this.load.setPreloadSprite(this.preloadBar);
     var phaserJSON;
+
     try{
       phaserJSON = this.game.cache.getJSON('imglists');
     }catch(e){
+      console.log(e);
     }
+    console.log(phaserJSON)
     if(phaserJSON && phaserJSON.retval === 'ok'){
         for(var i=0; i < phaserJSON.retinfo.length; i++){
             this.load.image('sprites' + i, phaserJSON.retinfo[i].giftimg);
@@ -316,8 +327,8 @@ BasicGame.Game.prototype = {
 
   },
   checkTime: function(){
-    if(this.countdown > 0){
-      this.countdown-=1;
+    this.countdown-=1;
+    if(this.countdown >= 0){
       this.time_text.setText(this.countdown);
     }
   },
@@ -326,7 +337,7 @@ BasicGame.Game.prototype = {
 
     this.gifts = this.game.add.group();
 
-    this.game.add.sprite(460, 950, 'text2');
+    this.game.add.sprite(460, 940, 'text2');
     this.claw = this.gifts.create(this.zero_point[0], this.zero_point[1], 'claw');
 
     this.closeClaw(false);
@@ -335,7 +346,7 @@ BasicGame.Game.prototype = {
 
     startSignal.add(this.release, this);
     countdownSignal.add(this.stopcountdown, this);
-
+    countdownStart.add(this.startcountdown, this);
     //this.game.input.onDown.add(this.click, this);
     //this.game.input.onUp.add(this.release, this);
     for(var i = 0; i< this.max_doll; i++){
@@ -356,7 +367,6 @@ BasicGame.Game.prototype = {
     }
     this.add.sprite(4, 0, 'topmask');
     this.add.sprite(70, 10, 'topframe');
-    this.add.sprite(840, 10, 'topframe');
     this.add.sprite(98, 25, 'topleft');
     this.add.sprite(303, 10, 'countdown');
     this.time_text = this.game.add.text(540, 60, this.countdown, {
@@ -367,27 +377,33 @@ BasicGame.Game.prototype = {
     this.time_text.anchor.setTo(0.5, 0.5);
     this.timer = this.game.time.create(false);
     this.timer.loop(1000, this.checkTime, this);
-    this.timer.start();
+
     var self = this;
     console.log('ready')
+    this.claw_state = 1;
     try{
       self.giftready = true;
       onReady();
+      self.claw_state = 1;
     }catch(e){
     }
   },
   update : function() {
-    this.shake = Math.round(Math.random()*20) - 10;
-    if(this.countdown <=0){
+    if(this.countdown <=-5){
       this.state.start('FailMenu', true, false);
     }
     if(this.giftready){
-      if (this.claw_state == 2) {
+      if(this.claw_state == 1) {
+        if(this.claw.x < 525){
+          this.claw.x += 20;
+          this.claw_rope.x += 20;
+        }else {
+          this.claw_state = 5;
+        }
+      }else if (this.claw_state == 2) {
         this.rotate_speed = 20;
         this.claw.y += this.claw_speed;
-        this.claw.x += this.shake;
         this.claw_rope.height += this.claw_speed;
-        this.claw_rope.x += this.shake;
         if (this.claw.y >= this.claw_length) {
           this.closeClaw(true);
           this.claw_state = 3;
@@ -408,6 +424,13 @@ BasicGame.Game.prototype = {
         this.claw_state = 0;
         this.closeClaw(false);
         this.quitGame();
+      } else if (this.claw_state == 5) {
+        if(this.claw.x > 315){
+          this.claw.x -= 20;
+          this.claw_rope.x -= 20;
+        }else {
+          this.claw_state = 1;
+        }
       }
       for ( var i in this.gifts.children) {
         var gift = this.gifts.children[i];
@@ -433,7 +456,6 @@ BasicGame.Game.prototype = {
             //gift.y = 700 - Math.sqrt((this.ovalWidth*this.ovalWidth*this.ovalHeight*this.ovalHeight - this.ovalHeight*this.ovalHeight*(gift.x + this.dollOffsetX -600)*(gift.x + this.dollOffsetX -600))/(this.ovalWidth*this.ovalWidth)) - this.dollOffsetY;
           }
         }
-
       }
     }
   },
@@ -468,6 +490,10 @@ BasicGame.FailMenu = function (game) {
 BasicGame.FailMenu.prototype = {
   timer: null,
   countdown: 15,
+  errorcode: 0,
+  init: function(errorcode){
+    this.errorcode = errorcode;
+  },
   checkTime: function(){
     if(this.countdown > 0){
       console.log(this.countdown);
@@ -491,11 +517,15 @@ BasicGame.FailMenu.prototype = {
     this.add.sprite(303, 10, 'countdown');
     this.add.sprite(0, 0, 'mask');
 
+    if(this.errorcode == -1){
+      this.add.sprite(220, 120, 'fail2');
+    }else{
+      this.add.sprite(220, 120, 'fail');
+    }
 
-    this.add.sprite(220, 120, 'fail');
     this.add.sprite(404, 200, 'regret')
     this.playButton = this.add.button(320, 720, 'returnbtn', this.startGame, this);
-    this.game.add.sprite(460, 950, 'text2');
+    this.game.add.sprite(460, 940, 'text2');
     if(openError){
       try{
         openError();
@@ -559,7 +589,7 @@ BasicGame.MainMenu.prototype = {
     this.game.add.sprite(420, 660,
         'text1');
     this.playButton = this.add.button(320, 720, 'returnbtn', this.startGame, this);
-    this.game.add.sprite(460, 950,
+    this.game.add.sprite(460, 940,
         'text2');
     this.timer = this.game.time.create(false);
     this.timer.loop(1000, this.checkTime, this);

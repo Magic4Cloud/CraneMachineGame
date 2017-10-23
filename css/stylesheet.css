@@ -5,6 +5,7 @@ html{
 body{
   height: 990px;
   margin: 0px;
+  background: #000;
 }
 #game {
     /*width:90% !important;*/
