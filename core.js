@@ -266,7 +266,7 @@ BasicGame.Game.prototype = {
       return;
     }
 
-    this.winprize = this.giftsobject[ret.retinfo.giftid];
+    this.winprize = ret.retinfo.giftid;
     this.claw_state = 2;
   },
   stopcountdown: function(){
@@ -317,8 +317,7 @@ BasicGame.Game.prototype = {
     console.log(phaserJSON)
     if(phaserJSON && phaserJSON.retval === 'ok'){
         for(var i=0; i < phaserJSON.retinfo.length; i++){
-            this.load.image('sprites' + i, phaserJSON.retinfo[i].giftimg);
-            this.giftsobject[phaserJSON.retinfo[i].giftid] = i;
+            this.load.image('sprites' + phaserJSON.retinfo[i].giftid, phaserJSON.retinfo[i].giftimg);
         }
         this.max_doll = phaserJSON.retinfo.length
     }else{
