@@ -55,8 +55,6 @@ BasicGame.MainMenu.prototype = {
       }catch(e){
       }
     }
-
-
   }
 
 };

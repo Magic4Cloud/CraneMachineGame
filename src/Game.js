@@ -170,18 +170,25 @@ BasicGame.Game.prototype = {
     //this.game.input.onUp.add(this.release, this);
     for(var i = 0; i< this.max_doll; i++){
       var x,y,rotateup;
+      var phaserJSON;
+
+      try{
+        phaserJSON = this.game.cache.getJSON('imglists');
+      }catch(e){
+        console.log(e);
+      }
       if(i < this.max_doll/2){
         rotateup = false;
         x = 600 - this.ovalWidth + (this.ovalWidth*2/Math.floor(this.max_doll/2))*i;
         y = 700 - (this.ovalWidth - Math.abs(x + this.dollOffsetX -600))*this.ovalHeight/this.ovalWidth;
         //y = 700 - Math.sqrt((this.ovalWidth*this.ovalWidth*this.ovalHeight*this.ovalHeight - this.ovalHeight*this.ovalHeight*(x -600)*(x -600))/(this.ovalWidth*this.ovalWidth));
-        this.spawnDoll(i, x, y, rotateup, false);
+        this.spawnDoll(phaserJSON.retinfo[i].giftid, x, y, rotateup, false);
       }else{
         rotateup = true;
         x = 600 + this.ovalWidth - (this.ovalWidth*2/Math.floor(this.max_doll/2 + 1)) * (i - Math.floor(this.max_doll/2))
         y = 700 + (this.ovalWidth - Math.abs(x + this.dollOffsetX -600))*this.ovalHeight/this.ovalWidth;
         //y = 700 + Math.sqrt((this.ovalWidth*this.ovalWidth*this.ovalHeight*this.ovalHeight - this.ovalHeight*this.ovalHeight*(x -600)*(x -600))/(this.ovalWidth*this.ovalWidth));
-        this.spawnDoll(i, x, y, rotateup, true);
+        this.spawnDoll(phaserJSON.retinfo[i].giftid, x, y, rotateup, true);
       }
     }
     this.add.sprite(4, 0, 'topmask');
@@ -208,6 +215,14 @@ BasicGame.Game.prototype = {
     }
   },
   update : function() {
+    if(this.countdown <=0){
+      if(openError){
+        try{
+          openError();
+        }catch(e){
+        }
+      }
+    }
     if(this.countdown <=-5){
       this.state.start('FailMenu', true, false);
     }
